@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sucursales | Le Café</title>
+<meta name="description" content="Le Café ☕ Pastelería y Cafetería Gourmet. Desayunos, pasteles, postres y café de especialidad. Pide en línea, por WhatsApp o PedidosYa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
+<script>const WHATSAPP_NUMERO = '50377487398';</script>
+</head>
+<body>
+
+<div id="preloader"><div class="preloader-cup">☕</div></div>
+
+<header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+        <a href="index.html" class="logo">
+            <img src="assets/img/logo.jpg" alt="Le Café" class="logo-icon">
+            <span class="logo-text">Le Café</span>
+        </a>
+
+        <nav class="main-nav" id="mainNav">
+            <a href="index.html" class="">Inicio</a>
+            <a href="categoria-pasteleria.html" class="">Pastelería</a>
+            <a href="categoria-desayunos.html" class="">Desayunos</a>
+            <a href="categoria-snacks.html" class="">Snacks</a>
+            <a href="categoria-bebidas.html" class="">Bebidas</a>
+            <a href="categoria-postres.html" class="">Postres</a>
+            <a href="categoria-panaderia.html" class="">Panadería</a>
+            <a href="sucursales.html" class=" active">Sucursales</a>
+            <a href="nosotros.html" class="">Nosotros</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="https://www.pedidosyasv.com.sv/restaurantes/san-salvador/le-cafe-san-jacinto-5153825f-bbc6-4fe4-978b-936264594c57-menu?origin=shop_list" target="_blank" rel="noopener" class="btn-pedidosya" title="Pedir en PedidosYa">
+                <span>PedidosYa</span>
+            </a>
+            <button class="cart-toggle" id="cartToggle" title="Ver carrito">
+                <span class="cart-icon">🛒</span>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+
+<aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer-header">
+        <h3>Tu pedido</h3>
+        <button id="cartClose" class="cart-close">&times;</button>
+    </div>
+    <div class="cart-drawer-body" id="cartBody">
+        <p class="cart-empty">Tu carrito está vacío.</p>
+    </div>
+    <div class="cart-drawer-footer" id="cartFooter" style="display:none;">
+        <div class="cart-total">
+            <span>Total</span>
+            <strong id="cartTotal">$0.00</strong>
+        </div>
+        <button class="btn-whatsapp-order" id="btnWhatsappOrder">
+            <span class="wa-icon">📱</span> Enviar pedido por WhatsApp
+        </button>
+        <button class="btn-clear-cart" id="btnClearCart">Vaciar carrito</button>
+        <p class="cart-note">Selecciona tu sucursal al enviar el mensaje por WhatsApp para confirmar el pedido.</p>
+    </div>
+</aside>
+<div class="cart-overlay" id="cartOverlay"></div>
+<section class="page-header reveal">
+    <h1 class="sr-only">Nuestras sucursales</h1>
+</section>
+
+<section class="categoria-body">
+    <div class="container">
+        <div class="sucursales-grid sucursales-grid-full">
+            <div class="sucursal-card reveal">
+                <h4>Centro Histórico</h4>
+                <p class="sucursal-dir">📍 MRX5+GFR, San Salvador</p>
+                <p class="sucursal-horario">🕒 Lun–Sáb 7:00 am–7:00 pm · Dom 7:00 am–6:00 pm</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Centro+Hist%C3%B3rico+MRX5%2BGFR%2C+San+Salvador" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>Plaza Barrios</h4>
+                <p class="sucursal-dir">📍 2a Avenida Sur, San Salvador</p>
+                <p class="sucursal-horario">🕒 Todos los días 9:00 am–7:00 pm</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Plaza+Barrios+2a+Avenida+Sur%2C+San+Salvador" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>MetroSur</h4>
+                <p class="sucursal-dir">📍 Metro Sur, Alameda Juan Pablo II, San Salvador</p>
+                <p class="sucursal-horario">🕒 Todos los días 6:00 am–10:00 pm</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+MetroSur+Metro+Sur%2C+Alameda+Juan+Pablo+II%2C+San+Salvador" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>San Jacinto</h4>
+                <p class="sucursal-dir">📍 MRM5+XF7, San Salvador</p>
+                <p class="sucursal-horario">🕒 Todos los días 7:30 am–8:00 pm</p>
+                <p class="sucursal-tel">📞 +503 7748-7398</p>
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+San+Jacinto+MRM5%2BXF7%2C+San+Salvador" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>Mejicanos</h4>
+                <p class="sucursal-dir">📍 1a Avenida Norte, Mejicanos</p>
+                <p class="sucursal-horario">🕒 Todos los días 7:00 am–8:00 pm</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Mejicanos+1a+Avenida+Norte%2C+Mejicanos" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>Santa Tecla</h4>
+                <p class="sucursal-dir">📍 1 Calle Poniente, Santa Tecla (MPG6+4CP)</p>
+                <p class="sucursal-horario">🕒 Lun–Jue 7:00 am–8:00 pm · Vie–Dom 8:00 am–10:00 pm</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Santa+Tecla+1+Calle+Poniente%2C+Santa+Tecla+%28MPG6%2B4CP%29" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>Lourdes</h4>
+                <p class="sucursal-dir">📍 PJFJ+H5P, Lourdes, Colón</p>
+                <p class="sucursal-horario">🕒 Todos los días 8:00 am–7:30 pm</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Lourdes+PJFJ%2BH5P%2C+Lourdes%2C+Col%C3%B3n" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>Apopa</h4>
+                <p class="sucursal-dir">📍 2a Calle Poniente, Apopa</p>
+                <p class="sucursal-horario">🕒 Todos los días 8:00 am–7:00 pm</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Apopa+2a+Calle+Poniente%2C+Apopa" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>Apopa 2</h4>
+                <p class="sucursal-dir">📍 Avenida Quirino Chávez Sur #13, Apopa</p>
+                <p class="sucursal-horario">🕒 Todos los días 7:00 am–7:00 pm</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Apopa+2+Avenida+Quirino+Ch%C3%A1vez+Sur+%2313%2C+Apopa" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>Mall San Gabriel</h4>
+                <p class="sucursal-dir">📍 Mall San Gabriel, Apopa</p>
+                <p class="sucursal-horario">🕒 Todos los días 7:00 am–8:00 pm</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Mall+San+Gabriel+Mall+San+Gabriel%2C+Apopa" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>Aguilares</h4>
+                <p class="sucursal-dir">📍 2a Avenida Norte, Aguilares (XR47+MMV)</p>
+                <p class="sucursal-horario">🕒 Todos los días 8:00 am–9:00 pm</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Aguilares+2a+Avenida+Norte%2C+Aguilares+%28XR47%2BMMV%29" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>Ciudad Arce</h4>
+                <p class="sucursal-dir">📍 Calle Francisco Gavidia, Ciudad Arce</p>
+                <p class="sucursal-horario">🕒 Todos los días 7:30 am–7:00 pm</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Ciudad+Arce+Calle+Francisco+Gavidia%2C+Ciudad+Arce" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>Nueva Concepción</h4>
+                <p class="sucursal-dir">📍 3a Avenida Sur, Nueva Concepción</p>
+                <p class="sucursal-horario">🕒 Todos los días 7:00 am–8:00 pm</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Nueva+Concepci%C3%B3n+3a+Avenida+Sur%2C+Nueva+Concepci%C3%B3n" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>Quezaltepeque – Parque Morán</h4>
+                <p class="sucursal-dir">📍 7a Calle Poniente y Avenida 3 de Mayo, Local #13, Parque Morán</p>
+                <p class="sucursal-horario">🕒 Horario no confirmado</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Quezaltepeque+%E2%80%93+Parque+Mor%C3%A1n+7a+Calle+Poniente+y+Avenida+3+de+Mayo%2C+Local+%2313%2C+Parque+Mor%C3%A1n" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>Quezaltepeque – Centro</h4>
+                <p class="sucursal-dir">📍 1a Calle Poniente #7, Barrio El Centro</p>
+                <p class="sucursal-horario">🕒 Horario no confirmado</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Quezaltepeque+%E2%80%93+Centro+1a+Calle+Poniente+%237%2C+Barrio+El+Centro" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>Quezaltepeque – Avenida Delgado</h4>
+                <p class="sucursal-dir">📍 Avenida Delgado y 3a Calle Poniente #27-A, Barrio El Calvario</p>
+                <p class="sucursal-horario">🕒 Horario no confirmado</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Quezaltepeque+%E2%80%93+Avenida+Delgado+Avenida+Delgado+y+3a+Calle+Poniente+%2327-A%2C+Barrio+El+Calvario" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>Guazapa</h4>
+                <p class="sucursal-dir">📍 Guazapa, San Salvador</p>
+                <p class="sucursal-horario">🕒 Todos los días 6:00 am–10:00 pm</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+Guazapa+Guazapa%2C+San+Salvador" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>            <div class="sucursal-card reveal">
+                <h4>San Martín</h4>
+                <p class="sucursal-dir">📍 PWPW+F52, 4a Avenida Sur, San Martín</p>
+                <p class="sucursal-horario">🕒 Todos los días 7:00 am–7:00 pm</p>
+                
+                <a class="sucursal-maps" href="https://www.google.com/maps/search/Le+Caf%C3%A9+San+Mart%C3%ADn+PWPW%2BF52%2C+4a+Avenida+Sur%2C+San+Mart%C3%ADn" target="_blank" rel="noopener">Cómo llegar →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <a href="https://wa.me/50377487398?text=Hola%2C+me+gustar%C3%ADa+hacer+una+consulta+%F0%9F%98%8A" target="_blank" rel="noopener" class="whatsapp-float" title="Escríbenos por WhatsApp">
+        <span>📱</span>
+    </a>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo footer-logo">
+                    <span class="logo-icon">☕</span>
+                    <span class="logo-text">Le Café</span>
+                </div>
+                <p>21 años endulzando los momentos de los salvadoreños</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/lecafesv/" target="_blank" rel="noopener" title="Facebook">Facebook</a>
+                    <a href="https://www.instagram.com/lecafesv/" target="_blank" rel="noopener" title="Instagram">Instagram</a>
+                    <a href="https://wa.me/50377487398" target="_blank" rel="noopener" title="WhatsApp">WhatsApp</a>
+                    <a href="https://www.pedidosyasv.com.sv/restaurantes/san-salvador/le-cafe-san-jacinto-5153825f-bbc6-4fe4-978b-936264594c57-menu?origin=shop_list" target="_blank" rel="noopener" title="PedidosYa">PedidosYa</a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Menú</h4>
+                <a href="categoria-pasteleria.html">Pastelería</a>
+                <a href="categoria-desayunos.html">Desayunos</a>
+                <a href="categoria-snacks.html">Snacks</a>
+                <a href="categoria-bebidas.html">Bebidas</a>
+                <a href="categoria-postres.html">Postres</a>
+                <a href="categoria-panaderia.html">Panadería</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Le Café</h4>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="sucursales.html">Sucursales</a>
+                <a href="https://www.pedidosyasv.com.sv/restaurantes/san-salvador/le-cafe-san-jacinto-5153825f-bbc6-4fe4-978b-936264594c57-menu?origin=shop_list" target="_blank" rel="noopener">Pedir en PedidosYa</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <a href="https://wa.me/50377487398" target="_blank" rel="noopener">+503 7748-7398</a>
+                <a href="https://www.facebook.com/lecafesv/" target="_blank" rel="noopener">@lecafesv</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Le Café — Pastelería y Cafetería Gourmet. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

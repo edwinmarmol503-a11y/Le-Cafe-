@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pastelería | Le Café</title>
+<meta name="description" content="Le Café ☕ Pastelería y Cafetería Gourmet. Desayunos, pasteles, postres y café de especialidad. Pide en línea, por WhatsApp o PedidosYa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
+<script>const WHATSAPP_NUMERO = '50377487398';</script>
+</head>
+<body>
+
+<div id="preloader"><div class="preloader-cup">☕</div></div>
+
+<header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+        <a href="index.html" class="logo">
+            <img src="assets/img/logo.jpg" alt="Le Café" class="logo-icon">
+            <span class="logo-text">Le Café</span>
+        </a>
+
+        <nav class="main-nav" id="mainNav">
+            <a href="index.html" class="">Inicio</a>
+            <a href="categoria-pasteleria.html" class=" active">Pastelería</a>
+            <a href="categoria-desayunos.html" class="">Desayunos</a>
+            <a href="categoria-snacks.html" class="">Snacks</a>
+            <a href="categoria-bebidas.html" class="">Bebidas</a>
+            <a href="categoria-postres.html" class="">Postres</a>
+            <a href="categoria-panaderia.html" class="">Panadería</a>
+            <a href="sucursales.html" class="">Sucursales</a>
+            <a href="nosotros.html" class="">Nosotros</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="https://www.pedidosyasv.com.sv/restaurantes/san-salvador/le-cafe-san-jacinto-5153825f-bbc6-4fe4-978b-936264594c57-menu?origin=shop_list" target="_blank" rel="noopener" class="btn-pedidosya" title="Pedir en PedidosYa">
+                <span>PedidosYa</span>
+            </a>
+            <button class="cart-toggle" id="cartToggle" title="Ver carrito">
+                <span class="cart-icon">🛒</span>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+
+<aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer-header">
+        <h3>Tu pedido</h3>
+        <button id="cartClose" class="cart-close">&times;</button>
+    </div>
+    <div class="cart-drawer-body" id="cartBody">
+        <p class="cart-empty">Tu carrito está vacío.</p>
+    </div>
+    <div class="cart-drawer-footer" id="cartFooter" style="display:none;">
+        <div class="cart-total">
+            <span>Total</span>
+            <strong id="cartTotal">$0.00</strong>
+        </div>
+        <button class="btn-whatsapp-order" id="btnWhatsappOrder">
+            <span class="wa-icon">📱</span> Enviar pedido por WhatsApp
+        </button>
+        <button class="btn-clear-cart" id="btnClearCart">Vaciar carrito</button>
+        <p class="cart-note">Selecciona tu sucursal al enviar el mensaje por WhatsApp para confirmar el pedido.</p>
+    </div>
+</aside>
+<div class="cart-overlay" id="cartOverlay"></div>
+<section class="page-header reveal">
+    <h1 class="sr-only">Pastelería</h1>
+</section>
+
+<section class="categoria-body">
+    <div class="container">
+        <div class="tabs-nav reveal" id="tabsNav">
+            <button class="tab-btn active" data-tab="tab-0">8 porciones</button>
+            <button class="tab-btn " data-tab="tab-1">12 porciones</button>
+            <button class="tab-btn " data-tab="tab-2">25 porciones</button>
+        </div>
+
+        <div class="tab-panel active" id="tab-0">
+            <div class="productos-grid">
+                <div class="producto-card reveal">
+                    
+                    <img src="assets/img/pastel-frutas.jpg" alt="Frutas 8 porciones" loading="lazy">
+                    <div class="producto-info">
+                        <h4>Frutas 8 porciones</h4>
+                        <p class="producto-desc">Suave torta de vainilla, rellena de crema pastelera, sirope de canela clásico. Decorado con fruta.</p>
+                        <div class="producto-precio"><span>$8.95</span></div>
+                        <button class="btn-agregar" data-id="frutas-8-porciones" data-nombre="Frutas 8 porciones" data-precio="8.95" data-imagen="assets/img/pastel-frutas.jpg">Agregar</button>
+                    </div>
+                </div>                <div class="producto-card reveal">
+                    
+                    <img src="assets/img/pastel-fresa.jpg" alt="Fresa 8 porciones" loading="lazy">
+                    <div class="producto-info">
+                        <h4>Fresa 8 porciones</h4>
+                        <p class="producto-desc">Suave torta de vainilla, rellena de crema pastelera, sirope de canela clásico. Decorado con fresas naturales.</p>
+                        <div class="producto-precio"><span>$8.95</span></div>
+                        <button class="btn-agregar" data-id="fresa-8-porciones" data-nombre="Fresa 8 porciones" data-precio="8.95" data-imagen="assets/img/pastel-fresa.jpg">Agregar</button>
+                    </div>
+                </div>                <div class="producto-card reveal">
+                    <span class="badge badge-vendido">Más vendido</span><span class="badge badge-oferta">22% OFF</span>
+                    <img src="assets/img/pastel-caramelo.jpg" alt="Caramelo 8 porciones" loading="lazy">
+                    <div class="producto-info">
+                        <h4>Caramelo 8 porciones</h4>
+                        <p class="producto-desc">Suave torta de vainilla, rellena de caramelo, sirope de canela clásico. Decorado con fresas y maní.</p>
+                        <div class="producto-precio"><span class="precio-oferta">$7.00</span><span class="precio-tachado">$8.95</span></div>
+                        <button class="btn-agregar" data-id="caramelo-8-porciones" data-nombre="Caramelo 8 porciones" data-precio="7.00" data-imagen="assets/img/pastel-caramelo.jpg">Agregar</button>
+                    </div>
+                </div>                <div class="producto-card reveal">
+                    <span class="badge badge-vendido">Más vendido</span>
+                    <img src="assets/img/pastel-chocolate.jpg" alt="Chocolate 8 porciones" loading="lazy">
+                    <div class="producto-info">
+                        <h4>Chocolate 8 porciones</h4>
+                        <p class="producto-desc">Suave torta de chocolate, relleno de chocolate intenso, sirope de canela clásico. Decorado con fresas y chocolates.</p>
+                        <div class="producto-precio"><span>$9.95</span></div>
+                        <button class="btn-agregar" data-id="chocolate-8-porciones" data-nombre="Chocolate 8 porciones" data-precio="9.95" data-imagen="assets/img/pastel-chocolate.jpg">Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>        <div class="tab-panel " id="tab-1">
+            <div class="productos-grid">
+                <div class="producto-card reveal">
+                    <span class="badge badge-vendido">Más vendido</span><span class="badge badge-oferta">20% OFF</span>
+                    <img src="assets/img/pastel-frutas.jpg" alt="Frutas 12 porciones" loading="lazy">
+                    <div class="producto-info">
+                        <h4>Frutas 12 porciones</h4>
+                        <p class="producto-desc">Suave torta de vainilla, rellena de crema pastelera, sirope de canela clásico. Decorado con fruta.</p>
+                        <div class="producto-precio"><span class="precio-oferta">$11.16</span><span class="precio-tachado">$13.95</span></div>
+                        <button class="btn-agregar" data-id="frutas-12-porciones" data-nombre="Frutas 12 porciones" data-precio="11.16" data-imagen="assets/img/pastel-frutas.jpg">Agregar</button>
+                    </div>
+                </div>                <div class="producto-card reveal">
+                    <span class="badge badge-vendido">Más vendido</span>
+                    <img src="assets/img/pastel-fresa.jpg" alt="Fresa 12 porciones" loading="lazy">
+                    <div class="producto-info">
+                        <h4>Fresa 12 porciones</h4>
+                        <p class="producto-desc">Suave torta de vainilla, rellena de crema pastelera, sirope de canela clásico. Decorado con fresas naturales.</p>
+                        <div class="producto-precio"><span>$13.95</span></div>
+                        <button class="btn-agregar" data-id="fresa-12-porciones" data-nombre="Fresa 12 porciones" data-precio="13.95" data-imagen="assets/img/pastel-fresa.jpg">Agregar</button>
+                    </div>
+                </div>                <div class="producto-card reveal">
+                    
+                    <img src="assets/img/pastel-caramelo.jpg" alt="Caramelo 12 porciones" loading="lazy">
+                    <div class="producto-info">
+                        <h4>Caramelo 12 porciones</h4>
+                        <p class="producto-desc">Suave torta de vainilla, rellena de caramelo, sirope de canela clásico. Decorado con fresas y maní.</p>
+                        <div class="producto-precio"><span>$13.95</span></div>
+                        <button class="btn-agregar" data-id="caramelo-12-porciones" data-nombre="Caramelo 12 porciones" data-precio="13.95" data-imagen="assets/img/pastel-caramelo.jpg">Agregar</button>
+                    </div>
+                </div>                <div class="producto-card reveal">
+                    <span class="badge badge-vendido">Más vendido</span><span class="badge badge-oferta">20% OFF</span>
+                    <img src="assets/img/pastel-chocolate.jpg" alt="Chocolate 12 porciones" loading="lazy">
+                    <div class="producto-info">
+                        <h4>Chocolate 12 porciones</h4>
+                        <p class="producto-desc">Suave torta de chocolate, relleno de chocolate intenso, sirope de canela clásico. Decorado con fresas y chocolates.</p>
+                        <div class="producto-precio"><span class="precio-oferta">$11.95</span><span class="precio-tachado">$14.95</span></div>
+                        <button class="btn-agregar" data-id="chocolate-12-porciones" data-nombre="Chocolate 12 porciones" data-precio="11.95" data-imagen="assets/img/pastel-chocolate.jpg">Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>        <div class="tab-panel " id="tab-2">
+            <div class="productos-grid">
+                <div class="producto-card reveal">
+                    
+                    <img src="assets/img/pastel-frutas.jpg" alt="Frutas 25 porciones" loading="lazy">
+                    <div class="producto-info">
+                        <h4>Frutas 25 porciones</h4>
+                        <p class="producto-desc">Suave torta de vainilla, rellena de crema pastelera, sirope de canela clásico. Decorado con fruta.</p>
+                        <div class="producto-precio"><span>$18.95</span></div>
+                        <button class="btn-agregar" data-id="frutas-25-porciones" data-nombre="Frutas 25 porciones" data-precio="18.95" data-imagen="assets/img/pastel-frutas.jpg">Agregar</button>
+                    </div>
+                </div>                <div class="producto-card reveal">
+                    
+                    <img src="assets/img/pastel-fresa.jpg" alt="Fresa 25 porciones" loading="lazy">
+                    <div class="producto-info">
+                        <h4>Fresa 25 porciones</h4>
+                        <p class="producto-desc">Suave torta de vainilla, rellena de crema pastelera, sirope de canela clásico. Decorado con fresas naturales.</p>
+                        <div class="producto-precio"><span>$18.95</span></div>
+                        <button class="btn-agregar" data-id="fresa-25-porciones" data-nombre="Fresa 25 porciones" data-precio="18.95" data-imagen="assets/img/pastel-fresa.jpg">Agregar</button>
+                    </div>
+                </div>                <div class="producto-card reveal">
+                    
+                    <img src="assets/img/pastel-caramelo.jpg" alt="Caramelo 25 porciones" loading="lazy">
+                    <div class="producto-info">
+                        <h4>Caramelo 25 porciones</h4>
+                        <p class="producto-desc">Suave torta de vainilla, rellena de caramelo, sirope de canela clásico. Decorado con fresas y maní.</p>
+                        <div class="producto-precio"><span>$18.95</span></div>
+                        <button class="btn-agregar" data-id="caramelo-25-porciones" data-nombre="Caramelo 25 porciones" data-precio="18.95" data-imagen="assets/img/pastel-caramelo.jpg">Agregar</button>
+                    </div>
+                </div>                <div class="producto-card reveal">
+                    
+                    <img src="assets/img/pastel-chocolate.jpg" alt="Chocolate 25 porciones" loading="lazy">
+                    <div class="producto-info">
+                        <h4>Chocolate 25 porciones</h4>
+                        <p class="producto-desc">Suave torta de chocolate, relleno de chocolate intenso, sirope de canela clásico. Decorado con fresas y chocolates.</p>
+                        <div class="producto-precio"><span>$19.95</span></div>
+                        <button class="btn-agregar" data-id="chocolate-25-porciones" data-nombre="Chocolate 25 porciones" data-precio="19.95" data-imagen="assets/img/pastel-chocolate.jpg">Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <a href="https://wa.me/50377487398?text=Hola%2C+me+gustar%C3%ADa+hacer+una+consulta+%F0%9F%98%8A" target="_blank" rel="noopener" class="whatsapp-float" title="Escríbenos por WhatsApp">
+        <span>📱</span>
+    </a>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo footer-logo">
+                    <span class="logo-icon">☕</span>
+                    <span class="logo-text">Le Café</span>
+                </div>
+                <p>21 años endulzando los momentos de los salvadoreños</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/lecafesv/" target="_blank" rel="noopener" title="Facebook">Facebook</a>
+                    <a href="https://www.instagram.com/lecafesv/" target="_blank" rel="noopener" title="Instagram">Instagram</a>
+                    <a href="https://wa.me/50377487398" target="_blank" rel="noopener" title="WhatsApp">WhatsApp</a>
+                    <a href="https://www.pedidosyasv.com.sv/restaurantes/san-salvador/le-cafe-san-jacinto-5153825f-bbc6-4fe4-978b-936264594c57-menu?origin=shop_list" target="_blank" rel="noopener" title="PedidosYa">PedidosYa</a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Menú</h4>
+                <a href="categoria-pasteleria.html">Pastelería</a>
+                <a href="categoria-desayunos.html">Desayunos</a>
+                <a href="categoria-snacks.html">Snacks</a>
+                <a href="categoria-bebidas.html">Bebidas</a>
+                <a href="categoria-postres.html">Postres</a>
+                <a href="categoria-panaderia.html">Panadería</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Le Café</h4>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="sucursales.html">Sucursales</a>
+                <a href="https://www.pedidosyasv.com.sv/restaurantes/san-salvador/le-cafe-san-jacinto-5153825f-bbc6-4fe4-978b-936264594c57-menu?origin=shop_list" target="_blank" rel="noopener">Pedir en PedidosYa</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <a href="https://wa.me/50377487398" target="_blank" rel="noopener">+503 7748-7398</a>
+                <a href="https://www.facebook.com/lecafesv/" target="_blank" rel="noopener">@lecafesv</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Le Café — Pastelería y Cafetería Gourmet. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

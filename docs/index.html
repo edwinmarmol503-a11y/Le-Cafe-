@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inicio | Le Café</title>
+<meta name="description" content="Le Café ☕ Pastelería y Cafetería Gourmet. Desayunos, pasteles, postres y café de especialidad. Pide en línea, por WhatsApp o PedidosYa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☕</text></svg>">
+<script>const WHATSAPP_NUMERO = '50377487398';</script>
+</head>
+<body>
+
+<div id="preloader"><div class="preloader-cup">☕</div></div>
+
+<header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+        <a href="index.html" class="logo">
+            <img src="assets/img/logo.jpg" alt="Le Café" class="logo-icon">
+            <span class="logo-text">Le Café</span>
+        </a>
+
+        <nav class="main-nav" id="mainNav">
+            <a href="index.html" class=" active">Inicio</a>
+            <a href="categoria-pasteleria.html" class="">Pastelería</a>
+            <a href="categoria-desayunos.html" class="">Desayunos</a>
+            <a href="categoria-snacks.html" class="">Snacks</a>
+            <a href="categoria-bebidas.html" class="">Bebidas</a>
+            <a href="categoria-postres.html" class="">Postres</a>
+            <a href="categoria-panaderia.html" class="">Panadería</a>
+            <a href="sucursales.html" class="">Sucursales</a>
+            <a href="nosotros.html" class="">Nosotros</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="https://www.pedidosyasv.com.sv/restaurantes/san-salvador/le-cafe-san-jacinto-5153825f-bbc6-4fe4-978b-936264594c57-menu?origin=shop_list" target="_blank" rel="noopener" class="btn-pedidosya" title="Pedir en PedidosYa">
+                <span>PedidosYa</span>
+            </a>
+            <button class="cart-toggle" id="cartToggle" title="Ver carrito">
+                <span class="cart-icon">🛒</span>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </button>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+
+<aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer-header">
+        <h3>Tu pedido</h3>
+        <button id="cartClose" class="cart-close">&times;</button>
+    </div>
+    <div class="cart-drawer-body" id="cartBody">
+        <p class="cart-empty">Tu carrito está vacío.</p>
+    </div>
+    <div class="cart-drawer-footer" id="cartFooter" style="display:none;">
+        <div class="cart-total">
+            <span>Total</span>
+            <strong id="cartTotal">$0.00</strong>
+        </div>
+        <button class="btn-whatsapp-order" id="btnWhatsappOrder">
+            <span class="wa-icon">📱</span> Enviar pedido por WhatsApp
+        </button>
+        <button class="btn-clear-cart" id="btnClearCart">Vaciar carrito</button>
+        <p class="cart-note">Selecciona tu sucursal al enviar el mensaje por WhatsApp para confirmar el pedido.</p>
+    </div>
+</aside>
+<div class="cart-overlay" id="cartOverlay"></div>
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content reveal">
+        <h1>Sabor y tradición<br>en cada <span>momento</span></h1>
+        <p>21 años endulzando los momentos de los salvadoreños. Pasteles, desayunos, postres y café de especialidad, listos para pedir hoy.</p>
+        <div class="hero-actions">
+            <a href="#destacados" class="btn btn-primary">Ver menú</a>
+            <a href="https://wa.me/50377487398?text=Hola%2C+quiero+hacer+un+pedido+en+Le+Caf%C3%A9" target="_blank" rel="noopener" class="btn btn-outline">Pedir por WhatsApp</a>
+        </div>
+    </div>
+</section>
+
+<section class="categorias-section">
+    <div class="container">
+        <h2 class="section-title reveal">Nuestras categorías</h2>
+        <div class="categorias-grid">
+            <a href="categoria-pasteleria.html" class="categoria-card reveal">
+                <div class="categoria-card-img"><img src="assets/img/pastel-frutas.jpg" alt="Pastelería" loading="lazy"></div>
+                <div class="categoria-card-body">
+                    <span class="cat-icon">🎂</span>
+                    <h3>Pastelería</h3>
+                    <p>Pasteles frescos, rellenos y decorados para cada ocasión</p>
+                    <span class="cat-arrow">Ver productos →</span>
+                </div>
+            </a>            <a href="categoria-desayunos.html" class="categoria-card reveal">
+                <div class="categoria-card-img"><img src="assets/img/desayuno-tipico.jpg" alt="Desayunos" loading="lazy"></div>
+                <div class="categoria-card-body">
+                    <span class="cat-icon">🍳</span>
+                    <h3>Desayunos</h3>
+                    <p>Empieza el día con nuestros desayunos completos</p>
+                    <span class="cat-arrow">Ver productos →</span>
+                </div>
+            </a>            <a href="categoria-snacks.html" class="categoria-card reveal">
+                <div class="categoria-card-img"><img src="assets/img/combo-croissant-jamon-pollo-bebida.jpg" alt="Snacks" loading="lazy"></div>
+                <div class="categoria-card-body">
+                    <span class="cat-icon">🥪</span>
+                    <h3>Snacks</h3>
+                    <p>Combos y bocadillos ideales para cualquier momento</p>
+                    <span class="cat-arrow">Ver productos →</span>
+                </div>
+            </a>            <a href="categoria-bebidas.html" class="categoria-card reveal">
+                <div class="categoria-card-img"><img src="assets/img/cafe-americano-12oz.jpg" alt="Bebidas" loading="lazy"></div>
+                <div class="categoria-card-body">
+                    <span class="cat-icon">☕</span>
+                    <h3>Bebidas</h3>
+                    <p>Café de especialidad, frío o caliente</p>
+                    <span class="cat-arrow">Ver productos →</span>
+                </div>
+            </a>            <a href="categoria-postres.html" class="categoria-card reveal">
+                <div class="categoria-card-img"><img src="assets/img/caja-de-tartaletas.jpg" alt="Postres" loading="lazy"></div>
+                <div class="categoria-card-body">
+                    <span class="cat-icon">🍰</span>
+                    <h3>Postres</h3>
+                    <p>Postres que endulzan tus momentos</p>
+                    <span class="cat-arrow">Ver productos →</span>
+                </div>
+            </a>            <a href="categoria-panaderia.html" class="categoria-card reveal">
+                <div class="categoria-card-img"><img src="assets/img/magdalena-clasica.jpg" alt="Panadería" loading="lazy"></div>
+                <div class="categoria-card-body">
+                    <span class="cat-icon">🥐</span>
+                    <h3>Panadería</h3>
+                    <p>Pan dulce recién horneado, tradición salvadoreña</p>
+                    <span class="cat-arrow">Ver productos →</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="destacados-section" id="destacados">
+    <div class="container">
+        <h2 class="section-title reveal">Los más vendidos</h2>
+        <p class="section-sub reveal">Los favoritos de siempre, elegidos por nuestros clientes.</p>
+    </div>
+    <div class="carousel-track-wrapper reveal">
+        <div class="carousel-track" id="carouselTrack">
+            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/pastel-fresa.jpg" alt="Fresa 12 porciones" loading="lazy">
+                <div class="producto-info">
+                    <h4>Fresa 12 porciones</h4>
+                    <div class="producto-precio"><span>$13.95</span></div>
+                    <button class="btn-agregar" data-id="fresa-12-porciones" data-nombre="Fresa 12 porciones" data-precio="13.95" data-imagen="assets/img/pastel-fresa.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/magdalena-clasica.jpg" alt="Magdalena Clásica" loading="lazy">
+                <div class="producto-info">
+                    <h4>Magdalena Clásica</h4>
+                    <div class="producto-precio"><span>$3.95</span></div>
+                    <button class="btn-agregar" data-id="magdalena-clasica" data-nombre="Magdalena Clásica" data-precio="3.95" data-imagen="assets/img/magdalena-clasica.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/maria-luisa.jpg" alt="María Luisa" loading="lazy">
+                <div class="producto-info">
+                    <h4>María Luisa</h4>
+                    <div class="producto-precio"><span>$1.15</span></div>
+                    <button class="btn-agregar" data-id="maria-luisa" data-nombre="María Luisa" data-precio="1.15" data-imagen="assets/img/maria-luisa.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/pastel-frutas.jpg" alt="Frutas 12 porciones" loading="lazy">
+                <div class="producto-info">
+                    <h4>Frutas 12 porciones</h4>
+                    <div class="producto-precio"><span class="precio-oferta">$11.16</span><span class="precio-tachado">$13.95</span></div>
+                    <button class="btn-agregar" data-id="frutas-12-porciones" data-nombre="Frutas 12 porciones" data-precio="11.16" data-imagen="assets/img/pastel-frutas.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/pastel-chocolate.jpg" alt="Chocolate 8 porciones" loading="lazy">
+                <div class="producto-info">
+                    <h4>Chocolate 8 porciones</h4>
+                    <div class="producto-precio"><span>$9.95</span></div>
+                    <button class="btn-agregar" data-id="chocolate-8-porciones" data-nombre="Chocolate 8 porciones" data-precio="9.95" data-imagen="assets/img/pastel-chocolate.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/desayuno-tipico.jpg" alt="Desayuno típico" loading="lazy">
+                <div class="producto-info">
+                    <h4>Desayuno típico</h4>
+                    <div class="producto-precio"><span class="precio-oferta">$3.85</span><span class="precio-tachado">$5.50</span></div>
+                    <button class="btn-agregar" data-id="desayuno-tipico" data-nombre="Desayuno típico" data-precio="3.85" data-imagen="assets/img/desayuno-tipico.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/caja-de-reposteria.jpg" alt="Caja de Repostería" loading="lazy">
+                <div class="producto-info">
+                    <h4>Caja de Repostería</h4>
+                    <div class="producto-precio"><span>$10.00</span></div>
+                    <button class="btn-agregar" data-id="caja-de-reposteria" data-nombre="Caja de Repostería" data-precio="10.00" data-imagen="assets/img/caja-de-reposteria.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/pastel-chocolate.jpg" alt="Chocolate 12 porciones" loading="lazy">
+                <div class="producto-info">
+                    <h4>Chocolate 12 porciones</h4>
+                    <div class="producto-precio"><span class="precio-oferta">$11.95</span><span class="precio-tachado">$14.95</span></div>
+                    <button class="btn-agregar" data-id="chocolate-12-porciones" data-nombre="Chocolate 12 porciones" data-precio="11.95" data-imagen="assets/img/pastel-chocolate.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/pastel-caramelo.jpg" alt="Caramelo 8 porciones" loading="lazy">
+                <div class="producto-info">
+                    <h4>Caramelo 8 porciones</h4>
+                    <div class="producto-precio"><span class="precio-oferta">$7.00</span><span class="precio-tachado">$8.95</span></div>
+                    <button class="btn-agregar" data-id="caramelo-8-porciones" data-nombre="Caramelo 8 porciones" data-precio="7.00" data-imagen="assets/img/pastel-caramelo.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/pastel-fresa.jpg" alt="Fresa 12 porciones" loading="lazy">
+                <div class="producto-info">
+                    <h4>Fresa 12 porciones</h4>
+                    <div class="producto-precio"><span>$13.95</span></div>
+                    <button class="btn-agregar" data-id="fresa-12-porciones" data-nombre="Fresa 12 porciones" data-precio="13.95" data-imagen="assets/img/pastel-fresa.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/magdalena-clasica.jpg" alt="Magdalena Clásica" loading="lazy">
+                <div class="producto-info">
+                    <h4>Magdalena Clásica</h4>
+                    <div class="producto-precio"><span>$3.95</span></div>
+                    <button class="btn-agregar" data-id="magdalena-clasica" data-nombre="Magdalena Clásica" data-precio="3.95" data-imagen="assets/img/magdalena-clasica.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/maria-luisa.jpg" alt="María Luisa" loading="lazy">
+                <div class="producto-info">
+                    <h4>María Luisa</h4>
+                    <div class="producto-precio"><span>$1.15</span></div>
+                    <button class="btn-agregar" data-id="maria-luisa" data-nombre="María Luisa" data-precio="1.15" data-imagen="assets/img/maria-luisa.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/pastel-frutas.jpg" alt="Frutas 12 porciones" loading="lazy">
+                <div class="producto-info">
+                    <h4>Frutas 12 porciones</h4>
+                    <div class="producto-precio"><span class="precio-oferta">$11.16</span><span class="precio-tachado">$13.95</span></div>
+                    <button class="btn-agregar" data-id="frutas-12-porciones" data-nombre="Frutas 12 porciones" data-precio="11.16" data-imagen="assets/img/pastel-frutas.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/pastel-chocolate.jpg" alt="Chocolate 8 porciones" loading="lazy">
+                <div class="producto-info">
+                    <h4>Chocolate 8 porciones</h4>
+                    <div class="producto-precio"><span>$9.95</span></div>
+                    <button class="btn-agregar" data-id="chocolate-8-porciones" data-nombre="Chocolate 8 porciones" data-precio="9.95" data-imagen="assets/img/pastel-chocolate.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/desayuno-tipico.jpg" alt="Desayuno típico" loading="lazy">
+                <div class="producto-info">
+                    <h4>Desayuno típico</h4>
+                    <div class="producto-precio"><span class="precio-oferta">$3.85</span><span class="precio-tachado">$5.50</span></div>
+                    <button class="btn-agregar" data-id="desayuno-tipico" data-nombre="Desayuno típico" data-precio="3.85" data-imagen="assets/img/desayuno-tipico.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/caja-de-reposteria.jpg" alt="Caja de Repostería" loading="lazy">
+                <div class="producto-info">
+                    <h4>Caja de Repostería</h4>
+                    <div class="producto-precio"><span>$10.00</span></div>
+                    <button class="btn-agregar" data-id="caja-de-reposteria" data-nombre="Caja de Repostería" data-precio="10.00" data-imagen="assets/img/caja-de-reposteria.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/pastel-chocolate.jpg" alt="Chocolate 12 porciones" loading="lazy">
+                <div class="producto-info">
+                    <h4>Chocolate 12 porciones</h4>
+                    <div class="producto-precio"><span class="precio-oferta">$11.95</span><span class="precio-tachado">$14.95</span></div>
+                    <button class="btn-agregar" data-id="chocolate-12-porciones" data-nombre="Chocolate 12 porciones" data-precio="11.95" data-imagen="assets/img/pastel-chocolate.jpg">Agregar</button>
+                </div>
+            </div>            <div class="producto-card carousel-card">
+                <span class="badge badge-vendido">Más vendido</span>
+                <img src="assets/img/pastel-caramelo.jpg" alt="Caramelo 8 porciones" loading="lazy">
+                <div class="producto-info">
+                    <h4>Caramelo 8 porciones</h4>
+                    <div class="producto-precio"><span class="precio-oferta">$7.00</span><span class="precio-tachado">$8.95</span></div>
+                    <button class="btn-agregar" data-id="caramelo-8-porciones" data-nombre="Caramelo 8 porciones" data-precio="7.00" data-imagen="assets/img/pastel-caramelo.jpg">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="sucursales-preview">
+    <div class="container">
+        <h2 class="section-title reveal">Nuestras sucursales</h2>
+        <p class="section-sub reveal">18 sucursales listas para atenderte en todo El Salvador.</p>
+        <div class="sucursales-grid">
+            <div class="sucursal-card reveal">
+                <h4>Centro Histórico</h4>
+                <p class="sucursal-dir">📍 MRX5+GFR, San Salvador</p>
+                <p class="sucursal-horario">🕒 Lun–Sáb 7:00 am–7:00 pm · Dom 7:00 am–6:00 pm</p>
+                
+            </div>            <div class="sucursal-card reveal">
+                <h4>Plaza Barrios</h4>
+                <p class="sucursal-dir">📍 2a Avenida Sur, San Salvador</p>
+                <p class="sucursal-horario">🕒 Todos los días 9:00 am–7:00 pm</p>
+                
+            </div>            <div class="sucursal-card reveal">
+                <h4>MetroSur</h4>
+                <p class="sucursal-dir">📍 Metro Sur, Alameda Juan Pablo II, San Salvador</p>
+                <p class="sucursal-horario">🕒 Todos los días 6:00 am–10:00 pm</p>
+                
+            </div>
+        </div>
+        <div class="center-cta reveal">
+            <a href="sucursales.html" class="btn btn-primary">Ver todas las sucursales</a>
+        </div>
+    </div>
+</section>
+
+<section class="cta-banner reveal">
+    <div class="container cta-banner-inner">
+        <div>
+            <h2>¿Antojo de algo dulce?</h2>
+            <p>Haz tu pedido ahora por WhatsApp o a través de PedidosYa.</p>
+        </div>
+        <div class="cta-banner-actions">
+            <a href="https://wa.me/50377487398?text=Hola%2C+quiero+hacer+un+pedido+en+Le+Caf%C3%A9" target="_blank" rel="noopener" class="btn btn-primary">Pedir por WhatsApp</a>
+            <a href="https://www.pedidosyasv.com.sv/restaurantes/san-salvador/le-cafe-san-jacinto-5153825f-bbc6-4fe4-978b-936264594c57-menu?origin=shop_list" target="_blank" rel="noopener" class="btn btn-outline-light">Pedir en PedidosYa</a>
+        </div>
+    </div>
+</section>
+
+    <a href="https://wa.me/50377487398?text=Hola%2C+me+gustar%C3%ADa+hacer+una+consulta+%F0%9F%98%8A" target="_blank" rel="noopener" class="whatsapp-float" title="Escríbenos por WhatsApp">
+        <span>📱</span>
+    </a>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="logo footer-logo">
+                    <span class="logo-icon">☕</span>
+                    <span class="logo-text">Le Café</span>
+                </div>
+                <p>21 años endulzando los momentos de los salvadoreños</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/lecafesv/" target="_blank" rel="noopener" title="Facebook">Facebook</a>
+                    <a href="https://www.instagram.com/lecafesv/" target="_blank" rel="noopener" title="Instagram">Instagram</a>
+                    <a href="https://wa.me/50377487398" target="_blank" rel="noopener" title="WhatsApp">WhatsApp</a>
+                    <a href="https://www.pedidosyasv.com.sv/restaurantes/san-salvador/le-cafe-san-jacinto-5153825f-bbc6-4fe4-978b-936264594c57-menu?origin=shop_list" target="_blank" rel="noopener" title="PedidosYa">PedidosYa</a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Menú</h4>
+                <a href="categoria-pasteleria.html">Pastelería</a>
+                <a href="categoria-desayunos.html">Desayunos</a>
+                <a href="categoria-snacks.html">Snacks</a>
+                <a href="categoria-bebidas.html">Bebidas</a>
+                <a href="categoria-postres.html">Postres</a>
+                <a href="categoria-panaderia.html">Panadería</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Le Café</h4>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="sucursales.html">Sucursales</a>
+                <a href="https://www.pedidosyasv.com.sv/restaurantes/san-salvador/le-cafe-san-jacinto-5153825f-bbc6-4fe4-978b-936264594c57-menu?origin=shop_list" target="_blank" rel="noopener">Pedir en PedidosYa</a>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <a href="https://wa.me/50377487398" target="_blank" rel="noopener">+503 7748-7398</a>
+                <a href="https://www.facebook.com/lecafesv/" target="_blank" rel="noopener">@lecafesv</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Le Café — Pastelería y Cafetería Gourmet. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
