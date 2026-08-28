@@ -46,6 +46,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    /* ===== FAB de contacto (desplegable) ===== */
+    const fab = document.getElementById('fab');
+    const fabToggle = document.getElementById('fabToggle');
+    if (fab && fabToggle) {
+        const closeFab = () => {
+            fab.classList.remove('open');
+            fabToggle.setAttribute('aria-expanded', 'false');
+        };
+        fabToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = fab.classList.toggle('open');
+            fabToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+        document.addEventListener('click', (e) => {
+            if (fab.classList.contains('open') && !fab.contains(e.target)) closeFab();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeFab();
+        });
+        fab.querySelectorAll('.fab-item').forEach(a => a.addEventListener('click', closeFab));
+    }
+
     /* ===== Carrito (localStorage) ===== */
     const CART_KEY = 'lecafe_carrito';
     function getCart() {
@@ -202,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     document.querySelectorAll(
-        '.btn, .btn-agregar, .btn-whatsapp-order, .tab-btn, .whatsapp-float, .logo-icon, .cart-qty button, .cart-close, .menu-toggle, .cart-toggle'
+        '.btn, .btn-agregar, .btn-whatsapp-order, .tab-btn, .fab-toggle, .logo-icon, .cart-qty button, .cart-close, .menu-toggle, .cart-toggle'
     ).forEach(el => magnetize(el, 0.35));
     document.querySelectorAll('.categoria-card, .sucursal-card').forEach(el => magnetize(el, 0.06, 6));
 });
