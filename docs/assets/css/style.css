@@ -133,7 +133,7 @@ a { text-decoration: none; color: inherit; }
     position: absolute; inset: 0;
     background-image:
         linear-gradient(160deg, rgba(27,58,92,0.75) 0%, rgba(27,58,92,0.55) 55%, rgba(27,58,92,0.75) 100%),
-        url('../img/hero-banner.jpg');
+        url('../img/hero-banner.jpg?v=2');
     background-size: cover;
     background-position: center;
     animation: floatBg 16s ease-in-out infinite alternate;
@@ -274,7 +274,7 @@ a { text-decoration: none; color: inherit; }
 /* ===== Categoria hero (paginas internas) ===== */
 .page-header {
     height: 220px;
-    background-image: url('../img/hero-banner.jpg');
+    background-image: url('../img/hero-banner.jpg?v=2');
     background-size: cover;
     background-position: center;
 }
