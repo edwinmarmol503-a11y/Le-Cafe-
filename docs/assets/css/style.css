@@ -314,6 +314,38 @@ a { text-decoration: none; color: inherit; }
 .nosotros-cta { display: flex; gap: 14px; flex-wrap: wrap; }
 .nosotros-img img { border-radius: var(--radio); box-shadow: var(--sombra); }
 
+/* ===== Reseñas / valoración (nosotros) ===== */
+.resenas-section {
+    padding: 60px 0; background: var(--beige-medio);
+    border-top: 1px solid var(--borde-tarjeta);
+}
+.resenas-inner {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: 40px;
+}
+.resenas-rating { max-width: 440px; }
+.stars { position: relative; display: inline-block; line-height: 0; }
+.stars-track, .stars-fill { display: flex; }
+.stars-track { color: rgba(27, 58, 92, 0.16); }
+.stars-fill {
+    position: absolute; top: 0; left: 0; height: 100%;
+    overflow: hidden; color: #E6A93C;
+}
+.stars svg { flex: 0 0 26px; width: 26px; height: 26px; }
+.resenas-score { font-family: var(--fuente-titulo); font-size: 22px; color: var(--azul); margin-top: 14px; }
+.resenas-score strong { font-size: 30px; }
+.resenas-count { color: var(--texto-suave); font-size: 13.5px; margin-top: 4px; }
+.resenas-btn { margin-top: 18px; }
+.resenas-trust { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.resenas-trust li { font-size: 15px; color: var(--texto-suave); }
+.resenas-trust strong { font-family: var(--fuente-titulo); font-size: 19px; color: var(--azul); margin-right: 7px; }
+@media (max-width: 640px) {
+    .resenas-section { padding: 44px 0; }
+    .resenas-inner { flex-direction: column; align-items: flex-start; gap: 26px; }
+    .resenas-rating { max-width: none; }
+    .resenas-trust { flex-direction: row; flex-wrap: wrap; gap: 10px 22px; }
+}
+
 /* ===== Carrito lateral ===== */
 .cart-drawer {
     position: fixed; top: 0; right: -420px; width: 400px; max-width: 92vw; height: 100vh;
