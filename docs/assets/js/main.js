@@ -26,14 +26,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('menuToggle');
     const mainNav = document.getElementById('mainNav');
     const mobileOverlay = document.getElementById('mobileNavOverlay');
-    function closeMenu() { mainNav.classList.remove('open'); mobileOverlay.classList.remove('show'); }
+    function openMenu() {
+        mainNav.classList.add('open');
+        mobileOverlay.classList.add('show');
+        document.body.classList.add('nav-open');
+        menuToggle.setAttribute('aria-expanded', 'true');
+    }
+    function closeMenu() {
+        mainNav.classList.remove('open');
+        mobileOverlay.classList.remove('show');
+        document.body.classList.remove('nav-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+    }
     if (menuToggle) {
         menuToggle.addEventListener('click', () => {
-            mainNav.classList.toggle('open');
-            mobileOverlay.classList.toggle('show');
+            mainNav.classList.contains('open') ? closeMenu() : openMenu();
         });
         mobileOverlay.addEventListener('click', closeMenu);
         mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+        window.addEventListener('resize', () => { if (window.innerWidth > 900) closeMenu(); });
     }
 
     /* ===== Tabs (categoria-*.html) ===== */
