@@ -254,77 +254,78 @@
     }
 
     /* ============================================================
-     * 5. Carrusel arrastrable con inercia
+     * 5. Carrusel: auto-avance + arrastre (sin romper los botones)
+     *    - Touch: scroll nativo (NUNCA interceptamos eventos touch,
+     *      así "Agregar" siempre funciona en el celular).
+     *    - Mouse: arrastrar para desplazar, con supresión de click
+     *      solo si de verdad hubo arrastre (> 10 px).
      * ============================================================ */
     function initDragCarousel() {
         var wrap = document.querySelector('.carousel-track-wrapper');
         var track = document.getElementById('carouselTrack');
         if (!wrap || !track) return;
 
-        // Convertir de animación CSS a scroll real y arrastrable
         wrap.classList.add('carousel-draggable');
-        var half = track.scrollWidth / 2;
 
-        var down = false, moved = false, startX = 0, startScroll = 0;
-        var vel = 0, lastX = 0, lastT = 0, momentum = 0;
-        var auto = !reduce;
+        var half = 0;
+        function measure() { half = track.scrollWidth / 2; }
+        measure();
+        window.addEventListener('resize', measure);
 
-        function normalize() {
+        function loop() {
+            if (!half) return;
             if (wrap.scrollLeft >= half) wrap.scrollLeft -= half;
-            else if (wrap.scrollLeft < 0) wrap.scrollLeft += half;
+            else if (wrap.scrollLeft <= 0) wrap.scrollLeft += half;
+        }
+        wrap.addEventListener('scroll', loop, { passive: true });
+
+        var auto = !reduce, idle = 0;
+        function pauseAuto(ms) {
+            auto = false;
+            clearTimeout(idle);
+            idle = setTimeout(function () { auto = !reduce; }, ms || 2800);
         }
         function autoTick() {
-            if (auto && !down) { wrap.scrollLeft += 0.5; normalize(); }
+            if (auto) { wrap.scrollLeft += 0.4; loop(); }
             requestAnimationFrame(autoTick);
         }
-        function inertia() {
-            if (down) return;
-            if (Math.abs(momentum) > 0.2) {
-                wrap.scrollLeft -= momentum;
-                momentum *= 0.94;
-                normalize();
-                requestAnimationFrame(inertia);
-            }
-        }
-        function pointerDown(e) {
-            down = true; moved = false;
-            startX = lastX = (e.touches ? e.touches[0].pageX : e.pageX);
-            startScroll = wrap.scrollLeft;
-            lastT = performance.now(); momentum = 0;
-            wrap.classList.add('is-grabbing');
-        }
-        function pointerMove(e) {
-            if (!down) return;
-            var x = (e.touches ? e.touches[0].pageX : e.pageX);
-            var dx = x - startX;
-            if (Math.abs(dx) > 4) moved = true;
-            wrap.scrollLeft = startScroll - dx;
-            normalize();
-            var now = performance.now(), dt = now - lastT || 16;
-            momentum = (x - lastX) / dt * 16;
-            lastX = x; lastT = now;
-            if (e.cancelable && e.touches) e.preventDefault();
-        }
-        function pointerUp() {
-            if (!down) return;
-            down = false;
-            wrap.classList.remove('is-grabbing');
-            inertia();
-        }
-        wrap.addEventListener('mousedown', pointerDown);
-        window.addEventListener('mousemove', pointerMove);
-        window.addEventListener('mouseup', pointerUp);
-        wrap.addEventListener('touchstart', pointerDown, { passive: true });
-        wrap.addEventListener('touchmove', pointerMove, { passive: false });
-        wrap.addEventListener('touchend', pointerUp);
-        wrap.addEventListener('mouseenter', function () { auto = false; });
-        wrap.addEventListener('mouseleave', function () { auto = !reduce; });
-        // Evitar que un arrastre dispare el click de "Agregar"
-        track.addEventListener('click', function (e) {
-            if (moved) { e.preventDefault(); e.stopPropagation(); }
-        }, true);
+        if (!reduce) requestAnimationFrame(autoTick);
 
-        requestAnimationFrame(autoTick);
+        var canHover = window.matchMedia('(hover: hover)').matches;
+        if (canHover) {
+            wrap.addEventListener('mouseenter', function () { auto = false; });
+            wrap.addEventListener('mouseleave', function () { auto = !reduce; });
+        }
+        wrap.addEventListener('wheel', function () { pauseAuto(); }, { passive: true });
+        wrap.addEventListener('touchstart', function () { pauseAuto(6e5); }, { passive: true });
+        wrap.addEventListener('touchend', function () { pauseAuto(2800); }, { passive: true });
+
+        // Arrastre solo con mouse/lápiz — el touch usa scroll nativo
+        var dragging = false, startX = 0, startScroll = 0, dist = 0, suppress = false;
+        wrap.addEventListener('pointerdown', function (e) {
+            if (e.pointerType === 'touch') return;
+            dragging = true; dist = 0;
+            startX = e.clientX; startScroll = wrap.scrollLeft;
+            auto = false;
+            wrap.classList.add('is-grabbing');
+        });
+        window.addEventListener('pointermove', function (e) {
+            if (!dragging) return;
+            var dx = e.clientX - startX;
+            dist = Math.abs(dx);
+            wrap.scrollLeft = startScroll - dx;
+            loop();
+        });
+        window.addEventListener('pointerup', function () {
+            if (!dragging) return;
+            dragging = false;
+            wrap.classList.remove('is-grabbing');
+            pauseAuto();
+            if (dist > 10) { suppress = true; setTimeout(function () { suppress = false; }, 70); }
+        });
+        wrap.addEventListener('click', function (e) {
+            if (suppress) { e.preventDefault(); e.stopPropagation(); }
+        }, true);
     }
 
     /* ============================================================
@@ -363,10 +364,25 @@
         }, 720);
     }
 
+    function ripple(btn, e) {
+        if (reduce) return;
+        var r = btn.getBoundingClientRect();
+        var d = Math.max(r.width, r.height) * 2;
+        var s = document.createElement('span');
+        s.className = 'btn-ripple';
+        s.style.width = s.style.height = d + 'px';
+        s.style.left = ((e.clientX || r.left + r.width / 2) - r.left - d / 2) + 'px';
+        s.style.top = ((e.clientY || r.top + r.height / 2) - r.top - d / 2) + 'px';
+        btn.appendChild(s);
+        setTimeout(function () { s.remove(); }, 650);
+    }
+
     function initFlyToCart() {
         document.addEventListener('click', function (e) {
-            var btn = e.target.closest && e.target.closest('.btn-agregar');
-            if (btn) flyToCart(btn);
+            var add = e.target.closest && e.target.closest('.btn-agregar');
+            if (add) { ripple(add, e); flyToCart(add); return; }
+            var b = e.target.closest && e.target.closest('.btn, .btn-whatsapp-order');
+            if (b) ripple(b, e);
         });
     }
 

@@ -588,11 +588,30 @@ html.anim-on .hero.hero-ready::after { animation: heroSweep 8s ease-in-out 1.2s 
 .btn-agregar { position: relative; overflow: hidden; }
 .btn-agregar.added { background: #2e7d32; }
 
-/* --- Micro-interacción de botones --- */
-.btn, .btn-agregar, .btn-pedidosya, .resenas-btn {
+/* --- Micro-interacción de botones + ripple --- */
+.btn, .btn-agregar, .btn-pedidosya, .resenas-btn, .btn-whatsapp-order {
     transition: transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s ease, background .25s ease, color .25s ease;
+    position: relative; overflow: hidden;
 }
-.btn:active, .btn-agregar:active, .btn-pedidosya:active { transform: scale(.96); }
+.btn:active, .btn-agregar:active, .btn-pedidosya:active, .btn-whatsapp-order:active { transform: scale(.96); }
+.btn-ripple {
+    position: absolute; border-radius: 50%; pointer-events: none;
+    background: rgba(255, 255, 255, 0.45);
+    transform: scale(0); opacity: .7;
+    animation: btnRipple .6s cubic-bezier(.16,1,.3,1) forwards;
+}
+.btn-outline .btn-ripple, .btn-outline-light .btn-ripple, .resenas-btn.btn-ripple,
+.btn-pedidosya .btn-ripple { background: rgba(27, 58, 92, 0.16); }
+@keyframes btnRipple { to { transform: scale(1); opacity: 0; } }
+
+/* --- Header: se asienta al hacer scroll --- */
+.site-header { transition: box-shadow .3s ease, background .3s ease; }
+.site-header.is-scrolled {
+    background: rgba(255,255,255,0.96);
+    box-shadow: 0 4px 24px rgba(27,58,92,0.13);
+}
+.site-header.is-scrolled .logo-icon { transform: scale(.92); }
+.logo-icon { transition: transform .3s cubic-bezier(.16,1,.3,1); }
 
 /* --- Transición entre páginas (View Transitions API) --- */
 @media (prefers-reduced-motion: no-preference) {
@@ -604,41 +623,91 @@ html.anim-on .hero.hero-ready::after { animation: heroSweep 8s ease-in-out 1.2s 
 
 /* ===== Responsive ===== */
 @media (max-width: 900px) {
-    /* Menú móvil: cajón lateral derecho que nunca desborda el ancho */
+    /* --- Menú móvil: cajón lateral limpio --- */
     .main-nav {
         position: fixed; top: 0; right: 0; bottom: 0;
-        width: min(82vw, 340px); max-width: 100%;
+        width: min(84vw, 360px); max-width: 100%;
         background: var(--blanco);
-        flex-direction: column; align-items: stretch;
-        padding: 96px 26px 36px;
-        gap: 2px;
+        display: flex; flex-direction: column; align-items: stretch;
+        gap: 0;
+        padding: 0 0 max(28px, env(safe-area-inset-bottom, 0px));
         transform: translateX(100%);
-        transition: transform .34s cubic-bezier(.16, 1, .3, 1);
+        transition: transform .42s cubic-bezier(.16, 1, .3, 1);
         z-index: 620;
         overflow-y: auto; overscroll-behavior: contain;
-        box-shadow: -24px 0 60px rgba(16, 28, 44, 0.20);
+        box-shadow: -34px 0 80px rgba(16, 28, 44, 0.22);
+    }
+    .main-nav::before {
+        content: 'Navegación';
+        font-family: var(--fuente-texto);
+        font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+        color: var(--texto-suave);
+        padding: max(92px, calc(env(safe-area-inset-top, 0px) + 92px)) 28px 12px;
     }
     .main-nav.open { transform: translateX(0); }
+
     .main-nav a {
-        padding: 15px 4px; border-bottom: 1px solid var(--beige);
-        font-size: 16px;
+        display: flex; align-items: center; gap: 12px;
+        padding: 16px 28px;
+        font-size: 16.5px; font-weight: 500; color: var(--texto);
+        border-top: 1px solid rgba(27, 58, 92, 0.07);
+        transition: background .2s ease, color .2s ease;
     }
-    .main-nav a:last-child { border-bottom: 0; }
-    .main-nav a::after { display: none; }
+    .main-nav a:first-of-type { border-top: 0; }
+    /* punto de "activo" */
+    .main-nav a::before {
+        content: ''; width: 6px; height: 6px; border-radius: 50%;
+        background: var(--azul); flex: 0 0 6px;
+        opacity: 0; transform: scale(0);
+        transition: opacity .2s ease, transform .3s cubic-bezier(.16, 1, .3, 1);
+    }
+    /* chevron a la derecha */
+    .main-nav a::after {
+        content: '›'; display: block; position: static;
+        margin-left: auto; width: auto; height: auto; background: none;
+        font-size: 20px; line-height: 1; color: var(--texto-suave);
+        transform: translateX(0); opacity: .5;
+        transition: transform .25s cubic-bezier(.16, 1, .3, 1), opacity .2s ease;
+    }
+    .main-nav a:hover, .main-nav a:active { background: var(--beige-claro); }
+    .main-nav a:hover::after, .main-nav a:active::after { transform: translateX(4px); opacity: 1; }
+    .main-nav a.active {
+        color: var(--azul); font-weight: 700; background: var(--beige-medio);
+    }
+    .main-nav a.active::before { opacity: 1; transform: scale(1); }
+
+    /* entrada escalonada de los enlaces */
+    .main-nav.open a { animation: navLinkIn .5s cubic-bezier(.16, 1, .3, 1) backwards; }
+    .main-nav.open a:nth-child(1) { animation-delay: .10s; }
+    .main-nav.open a:nth-child(2) { animation-delay: .14s; }
+    .main-nav.open a:nth-child(3) { animation-delay: .18s; }
+    .main-nav.open a:nth-child(4) { animation-delay: .22s; }
+    .main-nav.open a:nth-child(5) { animation-delay: .26s; }
+    .main-nav.open a:nth-child(6) { animation-delay: .30s; }
+    .main-nav.open a:nth-child(7) { animation-delay: .34s; }
+    .main-nav.open a:nth-child(8) { animation-delay: .38s; }
+    .main-nav.open a:nth-child(9) { animation-delay: .42s; }
+    @keyframes navLinkIn { from { opacity: 0; transform: translateX(26px); } }
 
     .menu-toggle { display: flex; position: relative; z-index: 640; }
 
     .mobile-nav-overlay {
         position: fixed; inset: 0;
-        background: rgba(16, 28, 44, 0.5);
-        -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+        background: rgba(14, 24, 38, 0.55);
+        -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
         z-index: 600;
         opacity: 0; visibility: hidden;
-        transition: opacity .3s ease, visibility .3s ease;
+        transition: opacity .34s ease, visibility .34s ease;
     }
     .mobile-nav-overlay.show { opacity: 1; visibility: visible; }
-    /* Con el menú abierto, el header (y su botón X) quedan por encima del velo */
-    body.nav-open .site-header { z-index: 630; }
+    /* Header y drawer se leen como una sola superficie al abrir.
+       Se quita el backdrop-filter: si no, el header sería el bloque
+       contenedor del drawer fixed y lo recortaría a la altura del header. */
+    body.nav-open .site-header {
+        z-index: 630; background: var(--blanco);
+        box-shadow: 0 1px 0 rgba(27, 58, 92, 0.10);
+        -webkit-backdrop-filter: none; backdrop-filter: none;
+    }
 
     /* Compacta el botón a "Ya" sin duplicar el texto original */
     .btn-pedidosya span { font-size: 0; }

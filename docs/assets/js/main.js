@@ -215,10 +215,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ===== Header shadow on scroll ===== */
     const header = document.getElementById('siteHeader');
+    let headerScrolled = false;
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 10) header.style.boxShadow = '0 4px 24px rgba(27,58,92,0.14)';
-        else header.style.boxShadow = '0 2px 20px rgba(27,58,92,0.06)';
-    });
+        const s = window.scrollY > 12;
+        if (s !== headerScrolled) { headerScrolled = s; header.classList.toggle('is-scrolled', s); }
+    }, { passive: true });
 
     /* ===== Efecto magnético en elementos tipo "caja" ===== */
     function magnetize(el, strength, lift) {
