@@ -207,7 +207,7 @@
         var ctx = canvas.getContext('2d');
         var dpr = Math.min(window.devicePixelRatio || 1, 2);
         var W = 0, H = 0, parts = [], running = false, raf = 0;
-        var COUNT = window.innerWidth < 700 ? 9 : 14;
+        var COUNT = window.innerWidth < 700 ? 4 : 7;
 
         function resize() {
             W = hero.clientWidth; H = hero.clientHeight;
@@ -400,24 +400,6 @@
     }
 
     /* ============================================================
-     * 7. Transición entre páginas (View Transitions API)
-     * ============================================================ */
-    function initViewTransitions() {
-        if (reduce || !('startViewTransition' in document)) return;
-        var sameOrigin = location.origin;
-        document.addEventListener('click', function (e) {
-            var a = e.target.closest && e.target.closest('a');
-            if (!a) return;
-            if (a.target === '_blank' || a.hasAttribute('download')) return;
-            if (a.origin !== sameOrigin) return;
-            if (a.getAttribute('href').charAt(0) === '#') return;
-            if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-            e.preventDefault();
-            document.startViewTransition(function () { window.location.href = a.href; });
-        });
-    }
-
-    /* ============================================================
      * Init
      * ============================================================ */
     onReady(function () {
@@ -428,7 +410,8 @@
         initSteam();
         initDragCarousel();
         initFlyToCart();
-        initViewTransitions();
+        // La transición animada entre páginas se quitó: la navegación se siente
+        // más rápida yendo directo (comportamiento normal del navegador).
     });
 
     // Permite a data-render.js re-activar animaciones sobre contenido recién dibujado.
