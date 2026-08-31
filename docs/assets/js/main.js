@@ -166,15 +166,19 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCart();
     }
 
-    document.querySelectorAll('.btn-agregar').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const { id, nombre, precio, imagen } = btn.dataset;
-            addItem(id, nombre, parseFloat(precio), imagen);
-            btn.textContent = 'Agregado ✓';
-            btn.classList.add('added');
-            openCart();
-            setTimeout(() => { btn.textContent = 'Agregar'; btn.classList.remove('added'); }, 1400);
-        });
+    // Delegación en document: funciona para cualquier .btn-agregar (carrusel incluido),
+    // sin depender de que exista al cargar ni de otros listeners.
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.btn-agregar');
+        if (!btn) return;
+        const { id, nombre, precio, imagen } = btn.dataset;
+        if (!id) return;
+        addItem(id, nombre, parseFloat(precio), imagen);
+        btn.textContent = 'Agregado ✓';
+        btn.classList.add('added');
+        openCart();
+        clearTimeout(btn._resetT);
+        btn._resetT = setTimeout(() => { btn.textContent = 'Agregar'; btn.classList.remove('added'); }, 1400);
     });
 
     cartBody && cartBody.addEventListener('click', (e) => {

@@ -271,6 +271,10 @@
         function measure() { half = track.scrollWidth / 2; }
         measure();
         window.addEventListener('resize', measure);
+        // Recalcular cuando terminen de cargar las imágenes (cambia el ancho)
+        track.querySelectorAll('img').forEach(function (im) {
+            if (!im.complete) im.addEventListener('load', measure, { once: true });
+        });
 
         function loop() {
             if (!half) return;
@@ -279,52 +283,52 @@
         }
         wrap.addEventListener('scroll', loop, { passive: true });
 
-        var auto = !reduce, idle = 0;
-        function pauseAuto(ms) {
-            auto = false;
-            clearTimeout(idle);
-            idle = setTimeout(function () { auto = !reduce; }, ms || 2800);
+        // Auto-avance. Se pausa mientras el puntero está encima o el usuario interactúa,
+        // así el botón nunca "se mueve" bajo el cursor al hacer clic.
+        var paused = reduce, resumeT = 0;
+        function pause(ms) {
+            paused = true;
+            clearTimeout(resumeT);
+            if (ms !== Infinity) resumeT = setTimeout(function () { paused = reduce; }, ms || 2500);
         }
-        function autoTick() {
-            if (auto) { wrap.scrollLeft += 0.4; loop(); }
-            requestAnimationFrame(autoTick);
+        function tick() {
+            if (!paused) { wrap.scrollLeft += 0.35; loop(); }
+            requestAnimationFrame(tick);
         }
-        if (!reduce) requestAnimationFrame(autoTick);
+        if (!reduce) requestAnimationFrame(tick);
 
-        var canHover = window.matchMedia('(hover: hover)').matches;
-        if (canHover) {
-            wrap.addEventListener('mouseenter', function () { auto = false; });
-            wrap.addEventListener('mouseleave', function () { auto = !reduce; });
-        }
-        wrap.addEventListener('wheel', function () { pauseAuto(); }, { passive: true });
-        wrap.addEventListener('touchstart', function () { pauseAuto(6e5); }, { passive: true });
-        wrap.addEventListener('touchend', function () { pauseAuto(2800); }, { passive: true });
+        wrap.addEventListener('pointerenter', function () { pause(Infinity); });
+        wrap.addEventListener('pointerleave', function () { pause(400); });
+        wrap.addEventListener('wheel', function () { pause(); }, { passive: true });
+        wrap.addEventListener('touchstart', function () { pause(Infinity); }, { passive: true });
+        wrap.addEventListener('touchend', function () { pause(2500); }, { passive: true });
 
-        // Arrastre solo con mouse/lápiz — el touch usa scroll nativo
-        var dragging = false, startX = 0, startScroll = 0, dist = 0, suppress = false;
+        // Arrastre SOLO con mouse/lápiz. En touch se usa el scroll nativo y jamás
+        // interceptamos eventos, por eso "Agregar" siempre funciona en el celular.
+        var down = false, sx = 0, sl = 0, moved = 0, block = false;
         wrap.addEventListener('pointerdown', function (e) {
-            if (e.pointerType === 'touch') return;
-            dragging = true; dist = 0;
-            startX = e.clientX; startScroll = wrap.scrollLeft;
-            auto = false;
-            wrap.classList.add('is-grabbing');
+            block = false;
+            if (e.pointerType === 'touch' || e.button !== 0) return;
+            down = true; moved = 0; sx = e.clientX; sl = wrap.scrollLeft;
+            pause(Infinity);
         });
         window.addEventListener('pointermove', function (e) {
-            if (!dragging) return;
-            var dx = e.clientX - startX;
-            dist = Math.abs(dx);
-            wrap.scrollLeft = startScroll - dx;
-            loop();
+            if (!down) return;
+            var dx = e.clientX - sx;
+            moved = Math.abs(dx);
+            if (moved > 3) { wrap.scrollLeft = sl - dx; loop(); wrap.classList.add('is-grabbing'); }
         });
         window.addEventListener('pointerup', function () {
-            if (!dragging) return;
-            dragging = false;
+            if (!down) return;
+            down = false;
             wrap.classList.remove('is-grabbing');
-            pauseAuto();
-            if (dist > 10) { suppress = true; setTimeout(function () { suppress = false; }, 70); }
+            block = moved > 8;          // hubo un arrastre real
+            pause(2500);
         });
+        // Solo bloquea el click si vino de un arrastre real; se limpia enseguida
+        // y en el siguiente pointerdown, así un clic normal jamás se ve afectado.
         wrap.addEventListener('click', function (e) {
-            if (suppress) { e.preventDefault(); e.stopPropagation(); }
+            if (block) { e.preventDefault(); e.stopPropagation(); block = false; }
         }, true);
     }
 
