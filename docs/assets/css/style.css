@@ -298,33 +298,24 @@ body.nav-open .menu-toggle span:nth-child(3) { transform: translateY(-7px) rotat
 
 /* ===== Categoria hero (paginas internas) ===== */
 .page-header {
-    height: 220px;
+    /* Banner completo, sin recortes: la caja tiene el mismo aspecto que la imagen */
+    aspect-ratio: 1600 / 685;
+    min-height: 170px;
+    max-height: 46vh;
+    background-color: #1e3a5f;            /* azul del banner: cubre cualquier borde */
     background-image: url('../img/hero-banner.jpg?v=2');
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     position: relative;
     overflow: hidden;
     isolation: isolate;
 }
-/* Ken-burns lento sobre la foto de cabecera de cada página */
-.page-header::before {
-    content: '';
-    position: absolute; inset: -5%;
-    background-image: inherit;
-    background-size: cover;
-    background-position: center;
-    animation: kenBurns 20s ease-in-out infinite alternate;
-    z-index: -1;
-}
-/* Viñeta para que la foto se sienta art-directed y el sitio respire debajo */
+/* Transición suave del banner hacia el beige de la página */
 .page-header::after {
     content: '';
     position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(27,58,92,.22) 0%, rgba(27,58,92,0) 42%, rgba(243,236,221,.35) 100%);
-}
-@keyframes kenBurns {
-    from { transform: scale(1.03) translate(0, 0); }
-    to   { transform: scale(1.13) translate(-1.6%, 1.2%); }
+    background: linear-gradient(180deg, rgba(27,58,92,0) 68%, var(--beige-claro) 100%);
 }
 .sr-only {
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -548,7 +539,9 @@ body.nav-open .menu-toggle span:nth-child(3) { transform: translateY(-7px) rotat
 /* --- Hero: titular revelado por máscara, palabra por palabra --- */
 .hero-content h1 .hl-word {
     display: inline-block; overflow: hidden; vertical-align: top;
-    padding-bottom: .1em; margin-bottom: -.1em;
+    /* aire para ascendentes/descendentes e itálicas sin cambiar el layout */
+    padding: .16em .1em .34em .04em;
+    margin: -.16em -.1em -.34em -.04em;
 }
 .hero-content h1 .hl-word-in {
     display: inline-block; will-change: transform;
@@ -598,6 +591,68 @@ html.anim-on .hero.hero-ready::after { animation: heroSweep 8s ease-in-out 1.2s 
     animation: none !important; width: max-content;
 }
 .carousel-track-wrapper.carousel-draggable.is-grabbing .carousel-card { pointer-events: none; }
+
+/* ============================================================
+ * Capa de "espectáculo" — pulido visual (todo GPU, sin JS extra)
+ * ============================================================ */
+
+/* Carrusel: bordes que se desvanecen para que las tarjetas "salgan" del aire */
+.carousel-track-wrapper {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 5%, #000 95%, transparent 100%);
+}
+
+/* Título de sección: filete que se dibuja al entrar en pantalla */
+.section-title { position: relative; padding-bottom: 16px; }
+.section-title::after {
+    content: ''; position: absolute; left: 50%; bottom: 0;
+    width: 64px; height: 3px; border-radius: 2px;
+    background: linear-gradient(90deg, var(--azul), var(--azul-suave));
+    transform: translateX(-50%) scaleX(0); transform-origin: center;
+    transition: transform .7s cubic-bezier(.16,1,.3,1) .15s;
+}
+.section-title.in-view::after,
+.section-title:not(.reveal)::after { transform: translateX(-50%) scaleX(1); }
+
+/* Tarjetas de categoría: brillo diagonal al pasar el cursor + elevación suave */
+.categoria-card { position: relative; }
+.categoria-card::after {
+    content: ''; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+    background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.55) 48%, transparent 62%);
+    background-size: 250% 100%; background-position: 120% 0;
+    opacity: 0; transition: background-position .8s cubic-bezier(.16,1,.3,1), opacity .3s ease;
+    mix-blend-mode: overlay;
+}
+.categoria-card:hover { transform: translateY(-8px); }
+.categoria-card:hover::after { opacity: 1; background-position: -40% 0; }
+
+/* Botones: reflejo que cruza al pasar el cursor */
+.btn { position: relative; overflow: hidden; }
+.btn::after {
+    content: ''; position: absolute; top: 0; left: -60%; width: 45%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.35), transparent);
+    transform: skewX(-18deg); transition: left .55s cubic-bezier(.16,1,.3,1);
+    pointer-events: none;
+}
+.btn:hover::after { left: 130%; }
+
+/* Hero: viñeta cinematográfica + grano de película sobre la foto */
+.hero::before {
+    content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background:
+        radial-gradient(120% 90% at 50% 25%, transparent 40%, rgba(11,22,38,.45) 100%),
+        linear-gradient(180deg, transparent 55%, rgba(243,236,221,.14) 100%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+    background-size: cover, cover, 140px 140px;
+    mix-blend-mode: soft-light;
+    opacity: .9;
+}
+.hero-content { position: relative; z-index: 3; }
+
+@media (prefers-reduced-motion: reduce) {
+    .section-title::after { transition: none; transform: translateX(-50%) scaleX(1); }
+    .categoria-card::after, .btn::after { display: none; }
+}
 
 /* --- "Agregar": la foto vuela al carrito --- */
 .fly-clone {

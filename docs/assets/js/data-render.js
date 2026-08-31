@@ -13,6 +13,7 @@
   // docs/*.html están todos en la raíz de docs/, así que la ruta es directa:
   DATA = 'data/';
 
+  var HDR_V = '?v=20260830-8';
   var FILES = ['categorias', 'productos', 'destacados', 'sucursales', 'config'];
 
   function money(n) { return '$' + (Number(n) || 0).toFixed(2); }
@@ -146,7 +147,7 @@
     if (cat) document.title = cat.nombre + ' | Le Café';
     var ph = document.querySelector('.page-header');
     if (ph && cat && cat.header_imagen) {
-      ph.style.backgroundImage = "url('" + imgPath(cat.header_imagen) + "')";
+      ph.style.backgroundImage = "url('" + imgPath(cat.header_imagen) + HDR_V + "')";
     }
 
     // agrupar por subcategoría preservando orden de aparición
@@ -193,7 +194,7 @@
     if (!bg) return;
     bg.style.backgroundImage =
       "linear-gradient(160deg, rgba(27,58,92,0.75) 0%, rgba(27,58,92,0.55) 55%, rgba(27,58,92,0.75) 100%), " +
-      "url('" + imgPath(cfg.hero_imagen) + "')";
+      "url('" + imgPath(cfg.hero_imagen) + HDR_V + "')";
   }
 
   /* ---------- CONFIG: parchar enlaces en todas las páginas ---------- */

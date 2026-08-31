@@ -13,7 +13,7 @@
     --f:'Playfair Display',serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:var(--f);color:var(--texto);background:var(--beige-claro);line-height:1.5}
+  body{font-family:var(--f);color:var(--texto);background:var(--beige-claro);line-height:1.5;overflow-x:hidden}
   img{max-width:100%;display:block}
   a{color:var(--azul-claro)}
   .wrap{max-width:1060px;margin:0 auto;padding:24px 20px 80px}
@@ -45,7 +45,7 @@
   .card{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--radio);
     padding:18px;margin-bottom:14px}
   .row{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
-  .row>*{flex:1;min-width:180px}
+  .row>*{flex:1 1 220px;min-width:0}
   label{display:block;font-size:12px;font-weight:600;color:var(--suave);
     text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
   input,select,textarea{width:100%;font-family:var(--f);font-size:14px;padding:9px 12px;
@@ -58,7 +58,7 @@
   th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--linea);vertical-align:middle}
   th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--suave)}
   tr:hover td{background:var(--beige-claro)}
-  td .thumb{width:44px;height:44px;object-fit:cover;border-radius:8px;background:var(--beige-medio)}
+  .thumb{width:44px;height:44px;flex:0 0 44px;object-fit:cover;border-radius:8px;background:var(--beige-medio)}
   .tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:50px;
     background:var(--beige);color:var(--azul)}
   .tag.off{background:#f2d7d3;color:var(--alerta)}
@@ -410,10 +410,10 @@ function renderDestacados(){
   $('#destList').innerHTML = db.productos.map(p=>{
     const on = db.destacados.includes(p.slug);
     return `<label style="display:flex;align-items:center;gap:12px;padding:9px 4px;border-bottom:1px solid var(--linea);cursor:pointer">
-      <input type="checkbox" style="width:auto" ${on?'checked':''} onchange="toggleDest('${esc(p.slug)}',this.checked)">
+      <input type="checkbox" style="width:auto;flex:0 0 auto" ${on?'checked':''} onchange="toggleDest('${esc(p.slug)}',this.checked)">
       <img class="thumb" src="../assets/img/${esc((p.imagen||'').replace(/^.*\//,''))}" onerror="this.style.visibility='hidden'">
-      <span><b>${esc(p.nombre)}</b> <span class="muted">· ${esc(p.categoria)}</span></span>
-      <span style="margin-left:auto" class="muted">${p.precio_oferta?money(p.precio_oferta):money(p.precio)}</span>
+      <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><b>${esc(p.nombre)}</b> <span class="muted">· ${esc(p.categoria)}</span></span>
+      <span style="flex:0 0 auto" class="muted">${p.precio_oferta?money(p.precio_oferta):money(p.precio)}</span>
     </label>`;
   }).join('');
 }
@@ -428,17 +428,17 @@ function renderSucursales(){
   $('#sucCount').textContent = db.sucursales.length + ' sucursales';
   $('#sucList').innerHTML = db.sucursales.map((s,i)=>`
     <div class="card">
-      <div class="row" style="align-items:center">
-        <div style="flex:2">
-          <b style="font-size:16px;color:var(--azul)">${esc(s.nombre)}</b>
-          <div class="muted" style="font-size:13px">📍 ${esc(s.direccion||'')}</div>
-          <div class="muted" style="font-size:13px">🕒 ${esc(s.horario||'')}${s.telefono?' · 📞 '+esc(s.telefono):''}</div>
+      <div class="row" style="align-items:center;justify-content:space-between">
+        <div style="flex:1 1 260px;min-width:0">
+          <b style="font-size:16px;color:var(--azul);word-break:break-word">${esc(s.nombre)}</b>
+          <div class="muted" style="font-size:13px;word-break:break-word">📍 ${esc(s.direccion||'')}</div>
+          <div class="muted" style="font-size:13px;word-break:break-word">🕒 ${esc(s.horario||'')}${s.telefono?' · 📞 '+esc(s.telefono):''}</div>
         </div>
-        <div style="flex:0;white-space:nowrap">
+        <div style="flex:0 0 auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
           <button class="btn ghost sm" onclick="editSuc(${i})">Editar</button>
           <button class="btn danger sm" onclick="delSuc(${i})">Borrar</button>
-          <button class="btn ghost sm" onclick="moveSuc(${i},-1)">↑</button>
-          <button class="btn ghost sm" onclick="moveSuc(${i},1)">↓</button>
+          <button class="btn ghost sm" onclick="moveSuc(${i},-1)" aria-label="Subir">↑</button>
+          <button class="btn ghost sm" onclick="moveSuc(${i},1)" aria-label="Bajar">↓</button>
         </div>
       </div>
     </div>`).join('') || '<p class="muted">Sin sucursales</p>';
