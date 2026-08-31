@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel · Le Café</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --azul:#1B3A5C; --azul-claro:#2F5D8A; --beige:#E7DAC2; --beige-medio:#EFE6D2;
+    --beige-claro:#F3ECDD; --blanco:#fff; --texto:#2A2A2A; --suave:#6B6459;
+    --linea:rgba(27,58,92,.14); --ok:#2e7d32; --alerta:#C0392B; --radio:14px;
+    --f:'Playfair Display',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--f);color:var(--texto);background:var(--beige-claro);line-height:1.5}
+  img{max-width:100%;display:block}
+  a{color:var(--azul-claro)}
+  .wrap{max-width:1060px;margin:0 auto;padding:24px 20px 80px}
+
+  header.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+  header.top img{width:46px;height:46px;border-radius:50%}
+  header.top h1{font-size:24px;color:var(--azul);font-weight:700}
+  header.top .sub{font-size:13px;color:var(--suave)}
+  .bar{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+
+  .btn{font-family:var(--f);font-weight:600;font-size:14px;border:1.5px solid var(--azul);
+    background:var(--azul);color:#fff;padding:10px 18px;border-radius:50px;cursor:pointer;
+    transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(27,58,92,.18)}
+  .btn.ghost{background:transparent;color:var(--azul)}
+  .btn.sm{padding:6px 12px;font-size:13px}
+  .btn.danger{border-color:var(--alerta);background:transparent;color:var(--alerta)}
+  .btn.danger:hover{background:var(--alerta);color:#fff}
+  .btn.ok{border-color:var(--ok);background:var(--ok)}
+
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:22px 0 18px;border-bottom:1px solid var(--linea)}
+  .tab{padding:10px 18px;border:none;background:none;font-family:var(--f);font-weight:600;
+    font-size:15px;color:var(--suave);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+  .tab.active{color:var(--azul);border-color:var(--azul)}
+  .panel{display:none}
+  .panel.active{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}}
+
+  .card{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--radio);
+    padding:18px;margin-bottom:14px}
+  .row{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+  .row>*{flex:1;min-width:180px}
+  label{display:block;font-size:12px;font-weight:600;color:var(--suave);
+    text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+  input,select,textarea{width:100%;font-family:var(--f);font-size:14px;padding:9px 12px;
+    border:1.5px solid var(--linea);border-radius:10px;background:#fff;color:var(--texto)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--azul-claro)}
+  textarea{min-height:64px;resize:vertical}
+  .hint{font-size:12px;color:var(--suave);margin-top:4px}
+
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--linea);vertical-align:middle}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--suave)}
+  tr:hover td{background:var(--beige-claro)}
+  td .thumb{width:44px;height:44px;object-fit:cover;border-radius:8px;background:var(--beige-medio)}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:50px;
+    background:var(--beige);color:var(--azul)}
+  .tag.off{background:#f2d7d3;color:var(--alerta)}
+  .muted{color:var(--suave)}
+  .price-off{color:var(--alerta);font-weight:700}
+  .strike{text-decoration:line-through;color:var(--suave);font-size:.9em}
+
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  .toolbar input[type=search]{max-width:280px}
+  .grid-list{overflow-x:auto}
+
+  .modal-bg{position:fixed;inset:0;background:rgba(16,28,44,.5);display:none;
+    align-items:flex-start;justify-content:center;padding:30px 16px;z-index:50;overflow-y:auto}
+  .modal-bg.open{display:flex}
+  .modal{background:#fff;border-radius:18px;max-width:640px;width:100%;padding:26px}
+  .modal h3{font-size:20px;color:var(--azul);margin-bottom:16px}
+  .modal .row{margin-bottom:14px}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+
+  .notice{background:var(--beige-medio);border:1px solid var(--linea);border-radius:var(--radio);
+    padding:16px 18px;font-size:14px;margin-bottom:18px}
+  .notice b{color:var(--azul)}
+  .steps{margin:8px 0 0 18px}
+  .steps li{margin-bottom:4px}
+
+  .status{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(120%);
+    background:var(--azul);color:#fff;padding:12px 22px;border-radius:50px;font-size:14px;
+    font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .35s cubic-bezier(.16,1,.3,1);z-index:80}
+  .status.show{transform:translateX(-50%) translateY(0)}
+
+  .imgprev{width:100%;height:120px;object-fit:cover;border-radius:10px;background:var(--beige-medio);border:1px solid var(--linea)}
+  .imgprev:not([src]),.imgprev[src=""]{display:none}
+  .filebox{border:1.5px dashed var(--linea);border-radius:12px;padding:14px;text-align:center;font-size:13px;color:var(--suave)}
+  .kbd{font-family:ui-monospace,monospace;background:var(--beige);padding:2px 6px;border-radius:5px;font-size:12px}
+  @media(max-width:640px){ header.top .bar{margin-left:0;width:100%} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <img src="../assets/img/logo.jpg" alt="" onerror="this.style.display='none'">
+    <div>
+      <h1>Panel de Le Café</h1>
+      <div class="sub">Editar productos, ofertas, sucursales y datos del sitio — sin base de datos</div>
+    </div>
+    <div class="bar">
+      <button class="btn ghost sm" id="btnLoad">Cargar archivos…</button>
+      <button class="btn ok" id="btnExport">Descargar cambios</button>
+    </div>
+  </header>
+
+  <div class="notice">
+    <b>Cómo funciona.</b> Todo se guarda solo en este navegador mientras editas.
+    Cuando termines, pulsa <b>Descargar cambios</b>: se bajan los archivos <span class="kbd">.json</span> modificados.
+    <ol class="steps">
+      <li>Sube esos archivos a GitHub dentro de <span class="kbd">docs/data/</span> (reemplazando los que están).</li>
+      <li>Si agregaste fotos nuevas, súbelas también a <span class="kbd">docs/assets/img/</span> con el mismo nombre que pusiste aquí.</li>
+      <li>En 1–2 minutos el sitio se actualiza solo.</li>
+    </ol>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-p="productos">Productos</button>
+    <button class="tab" data-p="destacados">Más vendidos</button>
+    <button class="tab" data-p="sucursales">Sucursales</button>
+    <button class="tab" data-p="config">Configuración</button>
+  </div>
+
+  <!-- PRODUCTOS -->
+  <section class="panel active" id="p-productos">
+    <div class="toolbar">
+      <button class="btn" id="addProd">+ Nuevo producto</button>
+      <select id="fCat"><option value="">Todas las categorías</option></select>
+      <input type="search" id="fSearch" placeholder="Buscar por nombre…">
+      <span class="muted" id="prodCount"></span>
+    </div>
+    <div class="grid-list">
+      <table>
+        <thead><tr><th></th><th>Producto</th><th>Categoría</th><th>Precio</th><th>Estado</th><th></th></tr></thead>
+        <tbody id="prodBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- DESTACADOS -->
+  <section class="panel" id="p-destacados">
+    <div class="notice" style="margin-bottom:14px">
+      Marca los productos que salen en el carrusel <b>“Los más vendidos”</b> de la página de inicio.
+    </div>
+    <div class="card"><div id="destList"></div></div>
+  </section>
+
+  <!-- SUCURSALES -->
+  <section class="panel" id="p-sucursales">
+    <div class="toolbar">
+      <button class="btn" id="addSuc">+ Nueva sucursal</button>
+      <span class="muted" id="sucCount"></span>
+    </div>
+    <div id="sucList"></div>
+  </section>
+
+  <!-- CONFIG -->
+  <section class="panel" id="p-config">
+    <div class="card">
+      <div class="row" style="margin-bottom:14px">
+        <div><label>Número de WhatsApp (con código país, sin +)</label>
+          <input id="cWa" placeholder="50377487398"><div class="hint">Se usa en todos los botones de WhatsApp del sitio.</div></div>
+        <div><label>Texto / lema del sitio</label><input id="cTag"></div>
+      </div>
+      <div class="row" style="margin-bottom:14px">
+        <div><label>Link de PedidosYa</label><input id="cPed"></div>
+      </div>
+      <div class="row" style="margin-bottom:14px">
+        <div><label>Facebook (perfil)</label><input id="cFb"></div>
+        <div><label>Instagram (perfil)</label><input id="cIg"></div>
+      </div>
+      <div class="row">
+        <div><label>Messenger — enviar mensaje directo</label><input id="cMsn" placeholder="https://m.me/lecafesv"></div>
+        <div><label>Instagram — enviar mensaje directo</label><input id="cIgdm" placeholder="https://ig.me/m/lecafesv"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <b style="color:var(--azul)">Imágenes de cabecera</b>
+      <p class="hint" style="margin:4px 0 14px">Nombre del archivo (debe estar en <span class="kbd">docs/assets/img/</span>). La foto grande de fondo de cada página.</p>
+      <div class="row" style="margin-bottom:14px">
+        <div><label>Inicio (hero)</label><input id="cHero" placeholder="inicio.jpg"></div>
+      </div>
+      <div id="catHeaders"></div>
+    </div>
+  </section>
+</div>
+
+<!-- MODAL PRODUCTO -->
+<div class="modal-bg" id="prodModal">
+  <div class="modal">
+    <h3 id="pmTitle">Producto</h3>
+    <div class="row">
+      <div style="flex:2"><label>Nombre</label><input id="pmNombre"></div>
+      <div><label>Categoría</label><select id="pmCat"></select></div>
+    </div>
+    <div class="row">
+      <div><label>Subcategoría (opcional)</label><input id="pmSub" list="subList" placeholder="ej. 12 porciones">
+        <datalist id="subList"></datalist></div>
+      <div><label>Badge (opcional)</label><input id="pmBadge" list="badgeList" placeholder="ej. Más vendido">
+        <datalist id="badgeList"><option value="Más vendido"></option></datalist></div>
+    </div>
+    <div class="row">
+      <div><label>Precio normal ($)</label><input id="pmPrecio" inputmode="decimal" placeholder="8.95"></div>
+      <div><label>Precio oferta ($) — dejar vacío si no hay</label><input id="pmOferta" inputmode="decimal" placeholder=""></div>
+    </div>
+    <div class="row">
+      <div><label>Descripción</label><textarea id="pmDesc"></textarea></div>
+    </div>
+    <div class="row">
+      <div style="flex:2">
+        <label>Imagen — nombre del archivo</label>
+        <input id="pmImg" placeholder="pastel-fresa.jpg">
+        <div class="hint">Solo el nombre. El archivo debe existir (o subirse) en <span class="kbd">docs/assets/img/</span>.</div>
+        <div class="filebox" id="pmDrop" style="margin-top:8px">Arrastra aquí la foto para ver una vista previa y copiar su nombre</div>
+      </div>
+      <div><label>Vista previa</label><img id="pmPrev" class="imgprev" alt=""></div>
+    </div>
+    <div class="row">
+      <div><label>Disponible</label>
+        <select id="pmDisp"><option value="1">Sí — visible en el sitio</option><option value="0">No — oculto</option></select>
+      </div>
+      <div><label>Identificador (slug)</label><input id="pmSlug"><div class="hint">Se genera del nombre. Cámbialo solo si sabes lo que haces.</div></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" data-close>Cancelar</button>
+      <button class="btn" id="pmSave">Guardar producto</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL SUCURSAL -->
+<div class="modal-bg" id="sucModal">
+  <div class="modal">
+    <h3 id="smTitle">Sucursal</h3>
+    <div class="row"><div style="flex:2"><label>Nombre</label><input id="smNombre"></div>
+      <div><label>Teléfono (opcional)</label><input id="smTel"></div></div>
+    <div class="row"><div><label>Dirección</label><input id="smDir"></div></div>
+    <div class="row"><div><label>Horario</label><input id="smHor" placeholder="Lun–Sáb 7:00 am–7:00 pm"></div></div>
+    <div class="modal-actions">
+      <button class="btn ghost" data-close>Cancelar</button>
+      <button class="btn" id="smSave">Guardar sucursal</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="fileLoader" accept=".json" multiple hidden>
+<div class="status" id="status"></div>
+
+<script>
+const LS = 'lecafe_panel_v1';
+const DATA_DIR = '../data/';
+const FILES = ['categorias','productos','destacados','sucursales','config'];
+let db = { categorias:[], productos:[], destacados:[], sucursales:[], config:{} };
+let dirty = new Set();
+
+/* ---------- utilidades ---------- */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money = n => '$' + (Number(n)||0).toFixed(2);
+const slugify = s => (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+  .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+function toast(msg){ const s=$('#status'); s.textContent=msg; s.classList.add('show');
+  clearTimeout(toast._t); toast._t=setTimeout(()=>s.classList.remove('show'),2200); }
+function markDirty(name){ dirty.add(name); persist(); }
+function persist(){ try{ localStorage.setItem(LS, JSON.stringify({db,dirty:[...dirty]})); }catch(e){} }
+
+/* ---------- carga ---------- */
+async function boot(){
+  const saved = (()=>{ try{ return JSON.parse(localStorage.getItem(LS)); }catch(e){ return null; } })();
+  if (saved && saved.db && saved.db.productos && saved.db.productos.length){
+    db = saved.db; dirty = new Set(saved.dirty||[]);
+    toast('Recuperado lo que estabas editando');
+  } else {
+    let ok = true;
+    for (const f of FILES){
+      try{ const r = await fetch(DATA_DIR+f+'.json',{cache:'no-store'}); if(!r.ok) throw 0; db[f] = await r.json(); }
+      catch(e){ ok = false; }
+    }
+    if (!ok){
+      toast('No pude leer los .json — usa “Cargar archivos…”');
+    }
+  }
+  renderAll();
+}
+
+/* ---------- tabs ---------- */
+$$('.tab').forEach(t=>t.addEventListener('click',()=>{
+  $$('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active');
+  $$('.panel').forEach(p=>p.classList.remove('active'));
+  $('#p-'+t.dataset.p).classList.add('active');
+}));
+
+/* ---------- render principal ---------- */
+function renderAll(){ fillCatSelects(); renderProductos(); renderDestacados(); renderSucursales(); renderConfig(); }
+
+function fillCatSelects(){
+  const opts = db.categorias.map(c=>`<option value="${esc(c.slug)}">${esc(c.nombre)}</option>`).join('');
+  $('#fCat').innerHTML = '<option value="">Todas las categorías</option>'+opts;
+  $('#pmCat').innerHTML = opts;
+  $('#subList').innerHTML = [...new Set(db.productos.map(p=>p.subcategoria).filter(Boolean))]
+    .map(s=>`<option value="${esc(s)}">`).join('');
+}
+
+/* ===== PRODUCTOS ===== */
+function renderProductos(){
+  const cat = $('#fCat').value, q = $('#fSearch').value.trim().toLowerCase();
+  const list = db.productos.filter(p=>(!cat||p.categoria===cat)&&(!q||p.nombre.toLowerCase().includes(q)));
+  $('#prodCount').textContent = list.length + ' de ' + db.productos.length;
+  $('#prodBody').innerHTML = list.map(p=>{
+    const i = db.productos.indexOf(p);
+    const price = p.precio_oferta
+      ? `<span class="price-off">${money(p.precio_oferta)}</span> <span class="strike">${money(p.precio)}</span>`
+      : money(p.precio);
+    const cn = (db.categorias.find(c=>c.slug===p.categoria)||{}).nombre || p.categoria;
+    return `<tr>
+      <td><img class="thumb" src="../assets/img/${esc((p.imagen||'').replace(/^.*\//,''))}" alt="" onerror="this.style.visibility='hidden'"></td>
+      <td><b>${esc(p.nombre)}</b>${p.subcategoria?`<br><span class="muted">${esc(p.subcategoria)}</span>`:''}</td>
+      <td>${esc(cn)}</td>
+      <td>${price}</td>
+      <td>${p.disponible?'<span class="tag">Visible</span>':'<span class="tag off">Oculto</span>'}${p.badge?` <span class="tag">${esc(p.badge)}</span>`:''}</td>
+      <td style="white-space:nowrap;text-align:right">
+        <button class="btn ghost sm" onclick="editProd(${i})">Editar</button>
+        <button class="btn danger sm" onclick="delProd(${i})">Borrar</button>
+      </td></tr>`;
+  }).join('') || `<tr><td colspan="6" class="muted" style="padding:26px;text-align:center">Sin productos</td></tr>`;
+}
+$('#fCat').addEventListener('change',renderProductos);
+$('#fSearch').addEventListener('input',renderProductos);
+
+let editIdx = -1;
+function openProd(){ $('#prodModal').classList.add('open'); }
+function closeProd(){ $('#prodModal').classList.remove('open'); }
+$('#addProd').addEventListener('click',()=>{
+  editIdx = -1; $('#pmTitle').textContent = 'Nuevo producto';
+  setProdForm({ nombre:'',categoria:(db.categorias[0]||{}).slug||'',subcategoria:'',badge:'',
+    precio:'',precio_oferta:'',descripcion:'',imagen:'',disponible:true,slug:'' });
+  openProd();
+});
+window.editProd = i=>{ editIdx=i; $('#pmTitle').textContent='Editar producto'; setProdForm(db.productos[i]); openProd(); };
+window.delProd = i=>{
+  if(!confirm('¿Borrar "'+db.productos[i].nombre+'"?')) return;
+  const s = db.productos[i].slug;
+  db.productos.splice(i,1);
+  db.destacados = db.destacados.filter(x=>x!==s);
+  markDirty('productos'); markDirty('destacados'); renderProductos(); renderDestacados();
+  toast('Producto borrado');
+};
+function setProdForm(p){
+  $('#pmNombre').value=p.nombre||''; $('#pmCat').value=p.categoria||'';
+  $('#pmSub').value=p.subcategoria||''; $('#pmBadge').value=p.badge||'';
+  $('#pmPrecio').value=p.precio||''; $('#pmOferta').value=p.precio_oferta||'';
+  $('#pmDesc').value=p.descripcion||''; $('#pmImg').value=(p.imagen||'').replace(/^.*\//,'');
+  $('#pmDisp').value=(p.disponible===false||p.disponible===0||p.disponible==='0')?'0':'1';
+  $('#pmSlug').value=p.slug||''; updatePrev();
+}
+function updatePrev(){
+  const n=$('#pmImg').value.trim();
+  $('#pmPrev').src = n ? '../assets/img/'+n : '';
+}
+$('#pmImg').addEventListener('input',updatePrev);
+$('#pmNombre').addEventListener('input',()=>{ if(editIdx===-1) $('#pmSlug').value=slugify($('#pmNombre').value); });
+$('#pmDrop').addEventListener('dragover',e=>{e.preventDefault();e.currentTarget.style.borderColor='var(--azul)';});
+$('#pmDrop').addEventListener('dragleave',e=>e.currentTarget.style.borderColor='');
+$('#pmDrop').addEventListener('drop',e=>{
+  e.preventDefault(); e.currentTarget.style.borderColor='';
+  const f=e.dataTransfer.files[0]; if(!f) return;
+  $('#pmImg').value=f.name; updatePrev();
+  const rd=new FileReader(); rd.onload=()=>$('#pmPrev').src=rd.result; rd.readAsDataURL(f);
+  toast('Recuerda subir "'+f.name+'" a docs/assets/img/');
+});
+$('#pmSave').addEventListener('click',()=>{
+  const nombre=$('#pmNombre').value.trim();
+  if(!nombre){ toast('Falta el nombre'); return; }
+  let slug=slugify($('#pmSlug').value||nombre);
+  if(!slug){ toast('Identificador inválido'); return; }
+  const dup = db.productos.findIndex((x,ix)=>x.slug===slug && ix!==editIdx);
+  if(dup>=0){ toast('Ya existe un producto con ese identificador'); return; }
+  const img=$('#pmImg').value.trim();
+  const obj={
+    slug, nombre, categoria:$('#pmCat').value,
+    subcategoria:$('#pmSub').value.trim(),
+    descripcion:$('#pmDesc').value.trim(),
+    precio:(parseFloat($('#pmPrecio').value)||0).toFixed(2),
+    precio_oferta: $('#pmOferta').value.trim() ? (parseFloat($('#pmOferta').value)||0).toFixed(2) : '',
+    imagen: img ? ('assets/img/'+img.replace(/^.*\//,'')) : '',
+    badge:$('#pmBadge').value.trim(),
+    disponible: $('#pmDisp').value==='1'
+  };
+  if(editIdx===-1) db.productos.push(obj);
+  else {
+    const old=db.productos[editIdx].slug;
+    db.productos[editIdx]=obj;
+    if(old!==slug){ db.destacados=db.destacados.map(x=>x===old?slug:x); markDirty('destacados'); }
+  }
+  markDirty('productos'); closeProd(); renderProductos(); fillCatSelects(); renderDestacados();
+  toast('Guardado');
+});
+
+/* ===== DESTACADOS ===== */
+function renderDestacados(){
+  $('#destList').innerHTML = db.productos.map(p=>{
+    const on = db.destacados.includes(p.slug);
+    return `<label style="display:flex;align-items:center;gap:12px;padding:9px 4px;border-bottom:1px solid var(--linea);cursor:pointer">
+      <input type="checkbox" style="width:auto" ${on?'checked':''} onchange="toggleDest('${esc(p.slug)}',this.checked)">
+      <img class="thumb" src="../assets/img/${esc((p.imagen||'').replace(/^.*\//,''))}" onerror="this.style.visibility='hidden'">
+      <span><b>${esc(p.nombre)}</b> <span class="muted">· ${esc(p.categoria)}</span></span>
+      <span style="margin-left:auto" class="muted">${p.precio_oferta?money(p.precio_oferta):money(p.precio)}</span>
+    </label>`;
+  }).join('');
+}
+window.toggleDest=(slug,on)=>{
+  db.destacados = db.destacados.filter(x=>x!==slug);
+  if(on) db.destacados.push(slug);
+  markDirty('destacados');
+};
+
+/* ===== SUCURSALES ===== */
+function renderSucursales(){
+  $('#sucCount').textContent = db.sucursales.length + ' sucursales';
+  $('#sucList').innerHTML = db.sucursales.map((s,i)=>`
+    <div class="card">
+      <div class="row" style="align-items:center">
+        <div style="flex:2">
+          <b style="font-size:16px;color:var(--azul)">${esc(s.nombre)}</b>
+          <div class="muted" style="font-size:13px">📍 ${esc(s.direccion||'')}</div>
+          <div class="muted" style="font-size:13px">🕒 ${esc(s.horario||'')}${s.telefono?' · 📞 '+esc(s.telefono):''}</div>
+        </div>
+        <div style="flex:0;white-space:nowrap">
+          <button class="btn ghost sm" onclick="editSuc(${i})">Editar</button>
+          <button class="btn danger sm" onclick="delSuc(${i})">Borrar</button>
+          <button class="btn ghost sm" onclick="moveSuc(${i},-1)">↑</button>
+          <button class="btn ghost sm" onclick="moveSuc(${i},1)">↓</button>
+        </div>
+      </div>
+    </div>`).join('') || '<p class="muted">Sin sucursales</p>';
+}
+let sucIdx=-1;
+$('#addSuc').addEventListener('click',()=>{ sucIdx=-1; $('#smTitle').textContent='Nueva sucursal';
+  $('#smNombre').value=$('#smDir').value=$('#smHor').value=$('#smTel').value='';
+  $('#sucModal').classList.add('open'); });
+window.editSuc=i=>{ sucIdx=i; const s=db.sucursales[i]; $('#smTitle').textContent='Editar sucursal';
+  $('#smNombre').value=s.nombre||''; $('#smDir').value=s.direccion||'';
+  $('#smHor').value=s.horario||''; $('#smTel').value=s.telefono||'';
+  $('#sucModal').classList.add('open'); };
+window.delSuc=i=>{ if(!confirm('¿Borrar "'+db.sucursales[i].nombre+'"?'))return;
+  db.sucursales.splice(i,1); markDirty('sucursales'); renderSucursales(); toast('Sucursal borrada'); };
+window.moveSuc=(i,d)=>{ const j=i+d; if(j<0||j>=db.sucursales.length)return;
+  const a=db.sucursales; [a[i],a[j]]=[a[j],a[i]]; markDirty('sucursales'); renderSucursales(); };
+$('#smSave').addEventListener('click',()=>{
+  const o={ nombre:$('#smNombre').value.trim(), direccion:$('#smDir').value.trim(),
+    horario:$('#smHor').value.trim(), telefono:$('#smTel').value.trim() };
+  if(!o.nombre){ toast('Falta el nombre'); return; }
+  if(sucIdx===-1) db.sucursales.push(o); else db.sucursales[sucIdx]=o;
+  markDirty('sucursales'); $('#sucModal').classList.remove('open'); renderSucursales(); toast('Guardado');
+});
+
+/* ===== CONFIG ===== */
+const CFG_MAP = { cWa:'whatsapp_numero', cTag:'site_tagline', cPed:'pedidosya_url',
+  cFb:'facebook_url', cIg:'instagram_url', cMsn:'messenger_url', cIgdm:'instagram_dm_url',
+  cHero:'hero_imagen' };
+function renderConfig(){
+  const c = db.config || (db.config = {});
+  Object.keys(CFG_MAP).forEach(id => { $('#'+id).value = c[CFG_MAP[id]] || ''; });
+  $('#catHeaders').innerHTML = db.categorias.map((cat,i) =>
+    '<div class="row" style="margin-bottom:10px"><div><label>' + esc(cat.nombre) +
+    '</label><input data-cathdr="' + i + '" value="' + esc(cat.header_imagen || '') +
+    '" placeholder="' + esc(cat.slug) + '.png"></div></div>').join('');
+  $$('[data-cathdr]').forEach(inp => inp.addEventListener('input', () => {
+    db.categorias[+inp.dataset.cathdr].header_imagen = inp.value.trim();
+    markDirty('categorias');
+  }));
+}
+Object.keys(CFG_MAP).forEach(id => {
+  $('#'+id).addEventListener('input', () => {
+    db.config[CFG_MAP[id]] = $('#'+id).value.trim();
+    markDirty('config');
+  });
+});
+
+/* ---------- modales: cerrar ---------- */
+$$('[data-close]').forEach(b=>b.addEventListener('click',()=>b.closest('.modal-bg').classList.remove('open')));
+$$('.modal-bg').forEach(m=>m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('open'); }));
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') $$('.modal-bg').forEach(m=>m.classList.remove('open')); });
+
+/* ---------- exportar ---------- */
+function download(name,obj){
+  const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+$('#btnExport').addEventListener('click',()=>{
+  const changed = dirty.size ? [...dirty] : FILES.filter(f=>f!=='categorias');
+  if(!changed.length){ toast('No hay cambios'); return; }
+  changed.forEach((f,ix)=>setTimeout(()=>download(f+'.json', f==='config'?db.config:db[f]), ix*250));
+  toast('Descargando: '+changed.join('.json, ')+'.json');
+  dirty.clear(); persist();
+});
+
+/* ---------- cargar archivos manualmente ---------- */
+$('#btnLoad').addEventListener('click',()=>$('#fileLoader').click());
+$('#fileLoader').addEventListener('change',async e=>{
+  for(const file of e.target.files){
+    const key = file.name.replace('.json','');
+    if(!FILES.includes(key)) continue;
+    try{ db[key] = JSON.parse(await file.text()); }catch(err){ toast('Error leyendo '+file.name); }
+  }
+  persist(); renderAll(); toast('Archivos cargados');
+  e.target.value='';
+});
+
+boot();
+</script>
+</body>
+</html>

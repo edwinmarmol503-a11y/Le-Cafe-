@@ -1,0 +1,50 @@
+[
+  {
+    "slug": "pasteleria",
+    "nombre": "Pastelería",
+    "descripcion": "Pasteles frescos, rellenos y decorados para cada ocasión",
+    "icono": "🎂",
+    "imagen": "assets/img/pastel-frutas.jpg",
+    "header_imagen": "assets/img/pasteleria.jpg"
+  },
+  {
+    "slug": "desayunos",
+    "nombre": "Desayunos",
+    "descripcion": "Empieza el día con nuestros desayunos completos",
+    "icono": "🍳",
+    "imagen": "assets/img/desayuno-tipico.jpg",
+    "header_imagen": "assets/img/desayunos.jpg"
+  },
+  {
+    "slug": "snacks",
+    "nombre": "Snacks",
+    "descripcion": "Combos y bocadillos ideales para cualquier momento",
+    "icono": "🥪",
+    "imagen": "assets/img/combo-croissant-jamon-pollo-bebida.jpg",
+    "header_imagen": "assets/img/snacks.jpg"
+  },
+  {
+    "slug": "bebidas",
+    "nombre": "Bebidas",
+    "descripcion": "Café de especialidad, frío o caliente",
+    "icono": "☕",
+    "imagen": "assets/img/cafe-americano-12oz.jpg",
+    "header_imagen": "assets/img/bebidas.jpg"
+  },
+  {
+    "slug": "postres",
+    "nombre": "Postres",
+    "descripcion": "Postres que endulzan tus momentos",
+    "icono": "🍰",
+    "imagen": "assets/img/caja-de-tartaletas.jpg",
+    "header_imagen": "assets/img/postres.jpg"
+  },
+  {
+    "slug": "panaderia",
+    "nombre": "Panadería",
+    "descripcion": "Pan dulce recién horneado, tradición salvadoreña",
+    "icono": "🥐",
+    "imagen": "assets/img/magdalena-clasica.jpg",
+    "header_imagen": "assets/img/panaderia.jpg"
+  }
+]

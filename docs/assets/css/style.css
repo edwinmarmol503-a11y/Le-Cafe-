@@ -302,6 +302,29 @@ body.nav-open .menu-toggle span:nth-child(3) { transform: translateY(-7px) rotat
     background-image: url('../img/hero-banner.jpg?v=2');
     background-size: cover;
     background-position: center;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+/* Ken-burns lento sobre la foto de cabecera de cada página */
+.page-header::before {
+    content: '';
+    position: absolute; inset: -5%;
+    background-image: inherit;
+    background-size: cover;
+    background-position: center;
+    animation: kenBurns 20s ease-in-out infinite alternate;
+    z-index: -1;
+}
+/* Viñeta para que la foto se sienta art-directed y el sitio respire debajo */
+.page-header::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(27,58,92,.22) 0%, rgba(27,58,92,0) 42%, rgba(243,236,221,.35) 100%);
+}
+@keyframes kenBurns {
+    from { transform: scale(1.03) translate(0, 0); }
+    to   { transform: scale(1.13) translate(-1.6%, 1.2%); }
 }
 .sr-only {
     position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;

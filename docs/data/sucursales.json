@@ -1,0 +1,110 @@
+[
+  {
+    "nombre": "Centro Histórico",
+    "direccion": "MRX5+GFR, San Salvador",
+    "horario": "Lun–Sáb 7:00 am–7:00 pm · Dom 7:00 am–6:00 pm",
+    "telefono": ""
+  },
+  {
+    "nombre": "Plaza Barrios",
+    "direccion": "2a Avenida Sur, San Salvador",
+    "horario": "Todos los días 9:00 am–7:00 pm",
+    "telefono": ""
+  },
+  {
+    "nombre": "MetroSur",
+    "direccion": "Metro Sur, Alameda Juan Pablo II, San Salvador",
+    "horario": "Todos los días 6:00 am–10:00 pm",
+    "telefono": ""
+  },
+  {
+    "nombre": "San Jacinto",
+    "direccion": "MRM5+XF7, San Salvador",
+    "horario": "Todos los días 7:30 am–8:00 pm",
+    "telefono": "+503 7748-7398"
+  },
+  {
+    "nombre": "Mejicanos",
+    "direccion": "1a Avenida Norte, Mejicanos",
+    "horario": "Todos los días 7:00 am–8:00 pm",
+    "telefono": ""
+  },
+  {
+    "nombre": "Santa Tecla",
+    "direccion": "1 Calle Poniente, Santa Tecla (MPG6+4CP)",
+    "horario": "Lun–Jue 7:00 am–8:00 pm · Vie–Dom 8:00 am–10:00 pm",
+    "telefono": ""
+  },
+  {
+    "nombre": "Lourdes",
+    "direccion": "PJFJ+H5P, Lourdes, Colón",
+    "horario": "Todos los días 8:00 am–7:30 pm",
+    "telefono": ""
+  },
+  {
+    "nombre": "Apopa",
+    "direccion": "2a Calle Poniente, Apopa",
+    "horario": "Todos los días 8:00 am–7:00 pm",
+    "telefono": ""
+  },
+  {
+    "nombre": "Apopa 2",
+    "direccion": "Avenida Quirino Chávez Sur #13, Apopa",
+    "horario": "Todos los días 7:00 am–7:00 pm",
+    "telefono": ""
+  },
+  {
+    "nombre": "Mall San Gabriel",
+    "direccion": "Mall San Gabriel, Apopa",
+    "horario": "Todos los días 7:00 am–8:00 pm",
+    "telefono": ""
+  },
+  {
+    "nombre": "Aguilares",
+    "direccion": "2a Avenida Norte, Aguilares (XR47+MMV)",
+    "horario": "Todos los días 8:00 am–9:00 pm",
+    "telefono": ""
+  },
+  {
+    "nombre": "Ciudad Arce",
+    "direccion": "Calle Francisco Gavidia, Ciudad Arce",
+    "horario": "Todos los días 7:30 am–7:00 pm",
+    "telefono": ""
+  },
+  {
+    "nombre": "Nueva Concepción",
+    "direccion": "3a Avenida Sur, Nueva Concepción",
+    "horario": "Todos los días 7:00 am–8:00 pm",
+    "telefono": ""
+  },
+  {
+    "nombre": "Quezaltepeque – Parque Morán",
+    "direccion": "7a Calle Poniente y Avenida 3 de Mayo, Local #13, Parque Morán",
+    "horario": "Horario no confirmado",
+    "telefono": ""
+  },
+  {
+    "nombre": "Quezaltepeque – Centro",
+    "direccion": "1a Calle Poniente #7, Barrio El Centro",
+    "horario": "Horario no confirmado",
+    "telefono": ""
+  },
+  {
+    "nombre": "Quezaltepeque – Avenida Delgado",
+    "direccion": "Avenida Delgado y 3a Calle Poniente #27-A, Barrio El Calvario",
+    "horario": "Horario no confirmado",
+    "telefono": ""
+  },
+  {
+    "nombre": "Guazapa",
+    "direccion": "Guazapa, San Salvador",
+    "horario": "Todos los días 6:00 am–10:00 pm",
+    "telefono": ""
+  },
+  {
+    "nombre": "San Martín",
+    "direccion": "PWPW+F52, 4a Avenida Sur, San Martín",
+    "horario": "Todos los días 7:00 am–7:00 pm",
+    "telefono": ""
+  }
+]

@@ -48,14 +48,15 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', () => { if (window.innerWidth > 900) closeMenu(); });
     }
 
-    /* ===== Tabs (categoria-*.html) ===== */
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById(btn.dataset.tab).classList.add('active');
-        });
+    /* ===== Tabs (categoria-*.html) — delegado, sirve para tabs dibujados por JS ===== */
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.tab-btn');
+        if (!btn) return;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        const panel = document.getElementById(btn.dataset.tab);
+        if (panel) panel.classList.add('active');
     });
 
     /* ===== FAB de contacto (desplegable) ===== */
