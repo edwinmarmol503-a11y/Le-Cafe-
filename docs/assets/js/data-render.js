@@ -13,7 +13,7 @@
   // docs/*.html están todos en la raíz de docs/, así que la ruta es directa:
   DATA = 'data/';
 
-  var HDR_V = '?v=20260830-10';
+  var HDR_V = '?v=20260830-11';
   var FILES = ['categorias', 'productos', 'destacados', 'sucursales', 'config'];
 
   function money(n) { return '$' + (Number(n) || 0).toFixed(2); }

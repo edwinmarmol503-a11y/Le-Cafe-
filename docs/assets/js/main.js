@@ -214,6 +214,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         msg += `\nTotal: $${total.toFixed(2)}\n\nPor favor indíquenme la sucursal más cercana para retirar o si tienen entrega a domicilio. ¡Gracias!`;
         window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(msg)}`, '_blank');
+        // Vacía el carrito y lleva a la página de agradecimiento
+        saveCart([]);
+        setTimeout(() => { window.location.href = 'gracias.html'; }, 500);
     });
 
     renderCart();
