@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /panel/
+
+Sitemap: https://edwinmarmol503-a11y.github.io/Le-Caf-/sitemap.xml

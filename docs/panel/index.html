@@ -180,6 +180,12 @@
         <div><label>Messenger — enviar mensaje directo</label><input id="cMsn" placeholder="https://m.me/lecafesv"></div>
         <div><label>Instagram — enviar mensaje directo</label><input id="cIgdm" placeholder="https://ig.me/m/lecafesv"></div>
       </div>
+      <div class="row" style="margin-top:14px">
+        <div><label>URL del sitio publicado</label><input id="cUrl" placeholder="https://usuario.github.io/repo">
+          <div class="hint">Se usa en los enlaces canónicos y el sitemap.</div></div>
+        <div><label>ID de Google Analytics (opcional)</label><input id="cGa" placeholder="G-XXXXXXXXXX">
+          <div class="hint">Déjalo vacío para no cargar Analytics.</div></div>
+      </div>
     </div>
 
     <div class="card">
@@ -466,7 +472,7 @@ $('#smSave').addEventListener('click',()=>{
 /* ===== CONFIG ===== */
 const CFG_MAP = { cWa:'whatsapp_numero', cTag:'site_tagline', cPed:'pedidosya_url',
   cFb:'facebook_url', cIg:'instagram_url', cMsn:'messenger_url', cIgdm:'instagram_dm_url',
-  cHero:'hero_imagen' };
+  cHero:'hero_imagen', cUrl:'site_url', cGa:'ga_id' };
 function renderConfig(){
   const c = db.config || (db.config = {});
   Object.keys(CFG_MAP).forEach(id => { $('#'+id).value = c[CFG_MAP[id]] || ''; });

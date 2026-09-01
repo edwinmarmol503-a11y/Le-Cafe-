@@ -13,7 +13,7 @@
   // docs/*.html están todos en la raíz de docs/, así que la ruta es directa:
   DATA = 'data/';
 
-  var HDR_V = '?v=20260830-9';
+  var HDR_V = '?v=20260830-10';
   var FILES = ['categorias', 'productos', 'destacados', 'sucursales', 'config'];
 
   function money(n) { return '$' + (Number(n) || 0).toFixed(2); }
@@ -197,6 +197,21 @@
       "url('" + imgPath(cfg.hero_imagen) + HDR_V + "')";
   }
 
+  /* ---------- Google Analytics (solo si hay ID en config) ---------- */
+  function loadAnalytics(cfg) {
+    if (!cfg || !cfg.ga_id || window.__gaLoaded) return;
+    window.__gaLoaded = true;
+    var id = cfg.ga_id;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', id, { anonymize_ip: true });
+  }
+
   /* ---------- CONFIG: parchar enlaces en todas las páginas ---------- */
   function applyConfig(cfg) {
     if (!cfg) return;
@@ -232,6 +247,7 @@
       try { renderCategoria(d); } catch (e) {}
       try { renderHeroImage(d.config); } catch (e) {}
       try { applyConfig(d.config); } catch (e) {}
+      try { loadAnalytics(d.config); } catch (e) {}
 
       // re-activar animaciones sobre el contenido nuevo
       if (window.leCafeAnim && window.leCafeAnim.rescan) window.leCafeAnim.rescan();
