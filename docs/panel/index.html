@@ -94,9 +94,55 @@
   .filebox{border:1.5px dashed var(--linea);border-radius:12px;padding:14px;text-align:center;font-size:13px;color:var(--suave)}
   .kbd{font-family:ui-monospace,monospace;background:var(--beige);padding:2px 6px;border-radius:5px;font-size:12px}
   @media(max-width:640px){ header.top .bar{margin-left:0;width:100%} }
+
+  /* --- Pantalla de acceso --- */
+  body.locked{overflow:hidden}
+  body.locked .wrap{display:none}
+  .lock{position:fixed;inset:0;z-index:200;background:var(--beige-claro);
+    display:flex;align-items:center;justify-content:center;padding:24px}
+  .lock-box{background:#fff;border:1px solid var(--linea);border-radius:18px;
+    padding:32px 28px;max-width:360px;width:100%;text-align:center;
+    box-shadow:0 24px 60px rgba(27,58,92,.14)}
+  .lock-logo{width:56px;height:56px;border-radius:50%;margin:0 auto 14px;display:block}
+  .lock-box h2{font-size:20px;color:var(--azul);margin-bottom:6px}
+  .lock-sub{font-size:13px;color:var(--suave);margin-bottom:18px}
+  .lock-box input{margin-bottom:12px}
+  .lock-box>.btn{width:100%}
+  .lock-err{color:var(--alerta);font-size:13px;margin-top:10px}
+  .lock-link{background:none;border:none;color:var(--azul-claro);font-family:var(--f);
+    font-size:12px;cursor:pointer;margin-top:16px;text-decoration:underline}
+  .lock-change{margin-top:14px;text-align:left;border-top:1px solid var(--linea);padding-top:14px}
+  .lock-change code{display:block;background:var(--beige-claro);padding:10px;border-radius:8px;
+    font-size:11px;word-break:break-all;margin-top:8px;font-family:ui-monospace,monospace;color:var(--texto)}
+  .lock-hint{font-size:12px;color:var(--suave);margin-top:10px}
+
+  /* --- Aviso de publicación tras "Descargar cambios" --- */
+  .publish-note{background:#fff8e6;border:1px solid #e8c96b;border-radius:var(--radio);
+    padding:14px 16px;font-size:13.5px;margin-bottom:14px;display:none}
+  .publish-note.show{display:block}
+  .publish-note b{color:var(--azul)}
 </style>
 </head>
-<body>
+<body class="locked">
+
+<div id="lockScreen" class="lock">
+  <form class="lock-box" id="lockForm" autocomplete="off">
+    <img src="../assets/img/logo.jpg" alt="" class="lock-logo" onerror="this.style.display='none'">
+    <h2>Panel de Le Café</h2>
+    <p class="lock-sub">Ingresa la contraseña para continuar.</p>
+    <input type="password" id="lockPass" placeholder="Contraseña" autocomplete="new-password" autofocus required>
+    <button class="btn" type="submit">Entrar</button>
+    <p class="lock-err" id="lockErr" hidden>Contraseña incorrecta.</p>
+    <button type="button" class="lock-link" id="lockChange">¿Cambiar la contraseña?</button>
+    <div class="lock-change" id="lockChangeBox" hidden>
+      <input type="password" id="lockNew" placeholder="Nueva contraseña" autocomplete="new-password">
+      <button type="button" class="btn ghost sm" id="lockGen">Generar código</button>
+      <p class="lock-hint">Copia esta línea y reemplaza la que empieza con <span class="kbd">const PASS_SHA256</span> dentro de <span class="kbd">docs/panel/index.html</span>, luego sube el archivo:</p>
+      <code id="lockHash"></code>
+    </div>
+  </form>
+</div>
+
 <div class="wrap">
 
   <header class="top">
@@ -119,6 +165,13 @@
       <li>Si agregaste fotos nuevas, súbelas también a <span class="kbd">docs/assets/img/</span> con el mismo nombre que pusiste aquí.</li>
       <li>En 1–2 minutos el sitio se actualiza solo.</li>
     </ol>
+    <p style="margin:10px 0 0;font-size:13px"><b>Importante:</b> el cambio <u>no se ve en el sitio</u> hasta que subas el <span class="kbd">.json</span> descargado a GitHub. El panel solo prepara el archivo.</p>
+  </div>
+
+  <div class="publish-note" id="publishNote">
+    <b>Archivos descargados.</b> Ahora entra a tu repositorio en GitHub → carpeta <span class="kbd">docs/data/</span> →
+    <b>Add file ▸ Upload files</b> → arrastra los <span class="kbd">.json</span> que se acaban de bajar (reemplazan los que hay) →
+    <b>Commit changes</b>. En 1–2 minutos se ve en el sitio.
   </div>
 
   <div class="tabs">
@@ -505,9 +558,11 @@ function download(name,obj){
 }
 $('#btnExport').addEventListener('click',()=>{
   const changed = dirty.size ? [...dirty] : FILES.filter(f=>f!=='categorias');
-  if(!changed.length){ toast('No hay cambios'); return; }
+  if(!changed.length){ toast('No hay cambios que descargar'); return; }
   changed.forEach((f,ix)=>setTimeout(()=>download(f+'.json', f==='config'?db.config:db[f]), ix*250));
   toast('Descargando: '+changed.join('.json, ')+'.json');
+  $('#publishNote').classList.add('show');
+  $('#publishNote').scrollIntoView({behavior:'smooth',block:'center'});
   dirty.clear(); persist();
 });
 
@@ -523,7 +578,33 @@ $('#fileLoader').addEventListener('change',async e=>{
   e.target.value='';
 });
 
-boot();
+/* ---------- Acceso con contraseña (no se guarda nada: se pide siempre) ---------- */
+// Contraseña por defecto: lecafe2026  — cámbiala con "¿Cambiar la contraseña?"
+const PASS_SHA256 = 'b9d18107d3733e7cafd5c7269124abbd412bd7017065750836bae19a179e343c';
+async function sha256(str){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+(function gate(){
+  const scr=$('#lockScreen'), err=$('#lockErr');
+  $('#lockForm').addEventListener('submit', async e=>{
+    e.preventDefault();
+    const h = await sha256($('#lockPass').value);
+    if(h===PASS_SHA256){
+      scr.remove(); document.body.classList.remove('locked'); boot();
+    }else{
+      err.hidden=false; $('#lockPass').value=''; $('#lockPass').focus();
+    }
+  });
+  $('#lockChange').addEventListener('click', ()=>{
+    const box=$('#lockChangeBox'); box.hidden=!box.hidden;
+  });
+  $('#lockGen').addEventListener('click', async ()=>{
+    const v=$('#lockNew').value;
+    if(!v){ toast('Escribe la nueva contraseña'); return; }
+    $('#lockHash').textContent = `const PASS_SHA256 = '${await sha256(v)}';`;
+  });
+})();
 </script>
 </body>
 </html>
